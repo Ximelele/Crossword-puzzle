@@ -12,11 +12,13 @@ while(c!='k') {
         case 'n' :
             if ((fr = fopen("1000znakov.txt", "r")) == NULL) {
                 printf("Spravu sa nepodarilo nacitat\n");
-                return 0;
+
             }
-            while ((b = getc(fr)) != EOF) {
-                putchar(b);
+            while ((c = getc(fr)) != EOF) {
+                putchar(c);
             }
+        case 'v':
+            printf("%c",povodne);
     }
 }
 
