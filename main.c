@@ -1,12 +1,11 @@
 #include <stdio.h>
-#include <string.h>
 #define MAX 1000
 #define MAXD 1000
 
 int main() {
     char povodne[MAX]="1000znakov.txt",sifra[MAXD];
-    FILE *fr,*fw;
-    int n,c;
+    FILE *fr;
+    int c;
 
 
     while(c!='k') {//pokial c==k
@@ -19,10 +18,13 @@ int main() {
 
                     for (int i = 0; i < sizeof(povodne) ; i++) {//for pre rozsah
                         fscanf(fr,"%c",&povodne[i]);//ukladanie do pola
-                        printf("%c",povodne[i]);//skusobny vypis s ostrenim
                     }
                 break;
-            case 'v': printf("What now\n");
+            case 'v': for (int i = 0; i < sizeof(povodne) ; i++){
+                    printf("%c",povodne[i]);//skusobny vypis
+            }
+            putchar('\n');
+            break;
         }
     }
 fclose(fr);
