@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 
 #define MAX 1000
 #define MAXD 1000
@@ -23,7 +22,7 @@ int main() {
                 }
                 break;
             case 'v':
-                if(povodne[0]=='\0') {
+                if(povodne[0]=='\0') {//overenie ci je pole povodny prazdne
                         printf("Sprava nie je nacitana");
                         }
                 else{
@@ -33,6 +32,10 @@ int main() {
                 }
                 putchar('\n');
                 break;
+            case 'u':
+                if(povodne[0]=='\0') {//overenie ci je pole povodny prazdne
+                    printf("Sprava nie je nacitana");
+                }
         }
     }
 
