@@ -1,9 +1,11 @@
 #include <stdio.h>
+#include <string.h>
+
 #define MAX 1000
 #define MAXD 1000
 
 int main() {
-    char povodne[MAX]="1000znakov.txt",sifra[MAXD];
+    char povodne[MAX]="",sifra[MAXD];
     FILE *fr;
     int c;
 
@@ -16,17 +18,24 @@ int main() {
 
                 }
 
-                    for (int i = 0; i < sizeof(povodne) ; i++) {//for pre rozsah
-                        fscanf(fr,"%c",&povodne[i]);//ukladanie do pola
-                    }
+                for (int i = 0; i < sizeof(povodne); i++) {//for pre rozsah
+                    fscanf(fr, "%c", &povodne[i]);//ukladanie do pola
+                }
                 break;
-            case 'v': for (int i = 0; i < sizeof(povodne) ; i++){
-                    printf("%c",povodne[i]);//skusobny vypis
-            }
-            putchar('\n');
-            break;
+            case 'v':
+                if(povodne[0]=='\0') {
+                        printf("Sprava nie je nacitana");
+                        }
+                else{
+                    for (int i = 0; i < sizeof(povodne); i++) {
+                        printf("%c", povodne[i]);//skusobny vypis
+                    }
+                }
+                putchar('\n');
+                break;
         }
     }
+
 fclose(fr);
     return 0;
 }
