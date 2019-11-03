@@ -1,30 +1,30 @@
 #include <stdio.h>
+#include <string.h>
 #define MAX 1000
 #define MAXD 1000
 
 int main() {
-    char povodne[MAX],sifra[MAXD];
+    char povodne[MAX]="1000znakov.txt",sifra[MAXD];
     FILE *fr,*fw;
-    int i,c,counter=0;
-    c = getchar();
-    while(c!='k') {
-        switch (c) {
+    int n,c;
+
+
+    while(c!='k') {//pokial c==k
+        switch (c = getchar()) {//nacitanie charakteru pre switch
             case 'n' :
-                if ((fr = fopen("1000znakov.txt", "r")) == NULL) {
+                if ((fr = fopen("1000znakov.txt", "r")) == NULL) {//overenie ci sa subor da otvorit
                     printf("Spravu sa nepodarilo nacitat\n");
 
                 }
-                while ((c = getc(fr)) != EOF) {
-                    if((c>= 'a'&& c<='z')||(c>= 'A'&& c<='Z')){
-                        counter++;
+
+                    for (int i = 0; i < sizeof(povodne) ; i++) {//for pre rozsah
+                        fscanf(fr,"%c",&povodne[i]);//ukladanie do pola
+                        printf("%c",povodne[i]);//skusobny vypis s ostrenim
                     }
-                }
-                printf("%d",counter);
-
-
+                break;
+            case 'v': printf("What now\n");
         }
-        break;
     }
-
+fclose(fr);
     return 0;
 }
