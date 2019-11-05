@@ -18,11 +18,7 @@ int ABC(char povodne[], char sifra[])
 
 
 int main() {
-<<<<<<< HEAD
     char povodne[MAX]="",sifra[MAX]="";
-=======
-    char povodne[MAX]="",sifra[MAX];
->>>>>>> ucase
     FILE *fr;
     int c;
 
@@ -48,11 +44,7 @@ int main() {
                 else{
                     for (int i = 0; i < sizeof(povodne); i++) {
                         if(povodne[i]!='\0')
-<<<<<<< HEAD
                             printf("%c", povodne[i]);//skusobny vypis
-=======
-                        printf("%c", povodne[i]);//skusobny vypis
->>>>>>> ucase
                     }
                 }
                 putchar('\n');
@@ -62,14 +54,11 @@ int main() {
                     printf("Sprava nie je nacitana\n");
                 }
                 int ucase = ABC(povodne, sifra);
-<<<<<<< HEAD
                 break;
             case 's':
                 if(sifra[0]=='\0') {//overenie ci je pole povodny prazdne
                     printf("Nie je k dispozicii upravena sprava\n");
                 }
-=======
->>>>>>> ucase
                 for (int i = 0; i < ucase; i++)
                 {
                     if (i > 0)
@@ -79,19 +68,11 @@ int main() {
                 printf("\n");
                 break;
         }
-<<<<<<< HEAD
 
 
     }
 
 
-=======
-
-
-        }
-
-
->>>>>>> ucase
     fclose(fr);
     return 0;
 }
