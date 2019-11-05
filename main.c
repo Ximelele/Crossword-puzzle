@@ -27,13 +27,21 @@ int ABC(char povodne[], char sifra[])
     }
     return k;
 }
+int SIFRA(char povodne[],char sifra[]){
+    for (int i = 0; i < MAX; i++)
+    {
+        if (i > 0)
+            printf("");
+        printf("%c", sifra[i]);
+    }
+    printf("\n");
+}
 
 
 int main() {
     char povodne[MAX]="",sifra[MAX]="";
     FILE *fr;
     int c;
-
 
     while(c!='k') {//pokial c==k
         switch (c = getchar()) {//nacitanie charakteru pre switch
@@ -63,13 +71,7 @@ int main() {
                 if(sifra[0]=='\0') {//overenie ci je pole povodny prazdne
                     printf("Nie je k dispozicii upravena sprava\n");
                 }
-                for (int i = 0; i < ucase; i++)
-                {
-                    if (i > 0)
-                        printf("");
-                    printf("%c", sifra[i]);
-                }
-                printf("\n");
+                int som = SIFRA(povodne,sifra);
                 break;
             case 'd':
                 if(povodne[0]=='\0') {//overenie ci je pole povodny prazdne
