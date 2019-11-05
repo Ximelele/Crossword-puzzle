@@ -3,4 +3,4 @@ project(ZPRPR C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(ZPRPR main.c)
+add_executable(ZPRPR main.c funkcie.h)
