@@ -38,7 +38,7 @@ int main() {
                 if(sifra[0]=='\0') {//overenie ci je pole povodny prazdne
                     printf("Nie je k dispozicii upravena sprava\n");
                 }
-                int som = SIFRA(povodne,sifra);
+                int printsifra = SIFRA(povodne,sifra);
                 break;
             case 'd':
                 if(povodne[0]=='\0') {//overenie ci je pole povodny prazdne
