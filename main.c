@@ -18,7 +18,7 @@ int ABC(char povodne[], char sifra[])
 
 
 int main() {
-    char povodne[MAX]="",sifra[MAX];
+    char povodne[MAX]="",sifra[MAX]="";
     FILE *fr;
     int c;
 
@@ -54,6 +54,11 @@ int main() {
                     printf("Sprava nie je nacitana\n");
                 }
                 int ucase = ABC(povodne, sifra);
+                break;
+            case 's':
+                if(sifra[0]=='\0') {//overenie ci je pole povodny prazdne
+                    printf("Nie je k dispozicii upravena sprava\n");
+                }
                 for (int i = 0; i < ucase; i++)
                 {
                     if (i > 0)
