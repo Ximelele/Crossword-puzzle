@@ -3,6 +3,18 @@
 #define MAX 1000
 #define SUBOR "sifra.txt"
 
+int READ(char povodne[],FILE *fr){
+    for (int i = 0; i < MAX; i++) {//for pre rozsah
+        fscanf(fr, "%c", &povodne[i]);//ukladanie do pola
+    }
+}
+int VCASE(char povodne[],char sifra[]){
+    for (int i = 0; i < MAX; i++) {
+        if(povodne[i]!='\0')
+            printf("%c", povodne[i]);
+    }
+    putchar('\n');
+}
 int ABC(char povodne[], char sifra[])
 {
     int i,k=0;
@@ -28,11 +40,9 @@ int main() {
             case 'n' :
                 if ((fr = fopen(SUBOR, "r")) == NULL) {//overenie ci sa subor da otvorit
                     printf("Spravu sa nepodarilo nacitat\n");
+                }
+                int kappa = READ(povodne,fr);
 
-                }
-                for (int i = 0; i < sizeof(povodne); i++) {//for pre rozsah
-                    fscanf(fr, "%c", &povodne[i]);//ukladanie do pola
-                }
                 if(fclose(fr) == EOF) {
                     printf("Chyba: zatvaranie suboru\n");
                 }
@@ -41,13 +51,7 @@ int main() {
                 if(povodne[0]=='\0') {//overenie ci je pole povodny prazdne
                     printf("Sprava nie je nacitana");
                 }
-                else{
-                    for (int i = 0; i < sizeof(povodne); i++) {
-                        if(povodne[i]!='\0')
-                            printf("%c", povodne[i]);//skusobny vypis
-                    }
-                }
-                putchar('\n');
+                int print = VCASE(povodne,sifra);
                 break;
             case 'u':
                 if(povodne[0]=='\0') {//overenie ci je pole povodny prazdne
@@ -67,6 +71,11 @@ int main() {
                 }
                 printf("\n");
                 break;
+            case 'd':
+                if(povodne[0]=='\0') {//overenie ci je pole povodny prazdne
+                    printf("Sprava nie je nacitana\n");
+                }
+
         }
 
 
