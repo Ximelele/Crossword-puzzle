@@ -44,7 +44,7 @@ int main() {
                 else{
                     for (int i = 0; i < sizeof(povodne); i++) {
                         if(povodne[i]!='\0')
-                        printf("%c", povodne[i]);//skusobny vypis
+                            printf("%c", povodne[i]);//skusobny vypis
                     }
                 }
                 putchar('\n');
@@ -70,7 +70,7 @@ int main() {
         }
 
 
-        }
+    }
 
 
     fclose(fr);
