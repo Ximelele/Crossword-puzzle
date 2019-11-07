@@ -8,19 +8,19 @@
 #include <stdio.h>
 #include <ctype.h>
 #define MAX 1000
-
-int READ(char povodne[],FILE *fr){
+void READ(char povodne[],FILE *fr){
     for (int i = 0; i < MAX; i++) {//for pre rozsah
         fscanf(fr, "%c", &povodne[i]);//ukladanie do pola
     }
 }
-int VCASE(char povodne[],char sifra[]){
+void VCASE(char povodne[],char sifra[]){
     for (int i = 0; i < MAX; i++) {
         if(povodne[i]!='\0')
             printf("%c", povodne[i]);
     }
     putchar('\n');
 }
+
 int ABC(char povodne[], char sifra[])
 {
     int i,k=0;
@@ -33,7 +33,7 @@ int ABC(char povodne[], char sifra[])
     }
     return k;
 }
-int SIFRA(char povodne[],char sifra[]){
+void SIFRA(char sifra[]){
     for (int i = 0; i < MAX; i++)
     {
         if(sifra[i]=='\0'){
