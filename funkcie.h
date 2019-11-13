@@ -72,4 +72,5 @@ void d(char povodne[]) {
 
 
 
+
 #endif //ZPRPR_FUNKCIE_H
