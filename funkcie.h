@@ -9,6 +9,8 @@
 #include <ctype.h>
 #include <string.h>
 #define MAX 1000
+#define N 'Z' - 'A' + 1
+
 void READ(char povodne[],FILE *fr){
     for (int i = 0; i < MAX; i++) {//for pre rozsah
         fscanf(fr, "%c", &povodne[i]);//ukladanie do pola
@@ -68,6 +70,35 @@ void d(char povodne[]) {
 
      }
 }
+void histogram(char sifra[]){
+    int i,j,k,hist[N],pocet_vsetkych=0;
+    for(i=0;i<N;i++){//nastavi pocet kazdeho vyskytu pismena na 0
+        hist[i]=0;
+    }
+    for(k=0;k<MAX;k++){//pocita pocet vyskytu kazdeho pismena od a po Z
+        if(sifra[k]>='A'&&sifra[k]<='Z'){
+            hist[sifra[k]-'A']++;
+            pocet_vsetkych++;
+        }
+    }
+
+
+    for( i = 10; i >= 1; --i){
+        for(j=0;j <N;++j)
+        {
+            if( i <= hist[j])
+                putchar('*');
+            else
+                putchar(' ');
+        }
+        putchar('\n');
+    }
+    for(i=0;i<N;i++){//vykresli abecedu dole
+        putchar('A'+i);
+    }
+}
+
+
 
 
 
