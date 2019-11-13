@@ -70,6 +70,7 @@ void d(char povodne[]) {
 
      }
 }
+<<<<<<< HEAD
 void histogram(char sifra[]){
     int i,j,k,hist[N],pocet_vsetkych=0;
     for(i=0;i<N;i++){//nastavi pocet kazdeho vyskytu pismena na 0
@@ -99,6 +100,39 @@ void histogram(char sifra[]){
 }
 
 
+=======
+void ceasar(char sifra[]){
+    char  ch;
+    int i, znak;
+
+    scanf("%d", &znak);
+
+    for(i = 0; sifra[i] != '\0'; ++i){
+        ch = sifra[i];
+
+        if(ch >= 'a' && ch <= 'z'){
+            ch = ch - znak;
+
+        if(ch < 'a'){
+            ch = ch + 'z' - 'a' + 1;
+        }
+
+        sifra[i] = ch;
+        }
+        else if(ch >= 'A' && ch <= 'Z'){
+            ch = ch - znak;
+
+        if(ch < 'A'){
+            ch = ch + 'Z' - 'A' + 1;
+        }
+
+        sifra[i] = ch;
+    }
+}
+
+printf("%s\n", sifra);
+}
+>>>>>>> ccase
 
 
 
