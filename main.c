@@ -26,7 +26,7 @@ int main() {
                 if(povodne[0]=='\0') {//overenie ci je pole povodny prazdne
                     printf("Sprava nie je nacitana");
                 }
-                VCASE(povodne,sifra);
+                VCASE(povodne);
                 break;
             case 'u':
                 if(povodne[0]=='\0') {//overenie ci je pole povodny prazdne
@@ -44,6 +44,13 @@ int main() {
                 if(povodne[0]=='\0') {//overenie ci je pole povodny prazdne
                     printf("Sprava nie je nacitana\n");
                 }
+                d(povodne);
+                break;
+            case 'h':
+                if(povodne[0]=='\0') {//overenie ci je pole povodny prazdne
+                    printf("Nie je k dispozicii upravena sprava\n");
+                }
+
 
         }
 

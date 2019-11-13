@@ -7,13 +7,14 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 #define MAX 1000
 void READ(char povodne[],FILE *fr){
     for (int i = 0; i < MAX; i++) {//for pre rozsah
         fscanf(fr, "%c", &povodne[i]);//ukladanie do pola
     }
 }
-void VCASE(char povodne[],char sifra[]){
+void VCASE(char povodne[]){
     for (int i = 0; i < MAX; i++) {
         if(povodne[i]!='\0')
             printf("%c", povodne[i]);
@@ -45,5 +46,30 @@ void SIFRA(char sifra[]){
     }
     putchar('\n');
 }
+void d(char povodne[]) {
+    int k, counter = 1;
+    scanf("%d", &k);
+    if (k > 1 && k < 100) {
+        for (int i = 0; i < MAX; i++) {
+            if(povodne[i]!='\0'){
+                counter++;
+            }
+            if(povodne[i+1]==' '||povodne[i+1]=='\0'){
+                if(counter-1==k){
+                    for (int j = i-k+1; j <i+1 ; ++j) {
+                        putchar(povodne[j]);
+                    }
+                    putchar('\n');
+                }
+                counter=0;
+            }
+
+        }
+
+     }
+}
+
+
+
 
 #endif //ZPRPR_FUNKCIE_H
