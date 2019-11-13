@@ -70,7 +70,6 @@ void d(char povodne[]) {
 
      }
 }
-<<<<<<< HEAD
 void histogram(char sifra[]){
     int i,j,k,hist[N],pocet_vsetkych=0;
     for(i=0;i<N;i++){//nastavi pocet kazdeho vyskytu pismena na 0
@@ -97,10 +96,10 @@ void histogram(char sifra[]){
     for(i=0;i<N;i++){//vykresli abecedu dole
         putchar('A'+i);
     }
+    putchar('\n');
 }
 
 
-=======
 void ceasar(char sifra[]){
     char  ch;
     int i, znak;
@@ -132,7 +131,6 @@ void ceasar(char sifra[]){
 
 printf("%s\n", sifra);
 }
->>>>>>> ccase
 
 
 
