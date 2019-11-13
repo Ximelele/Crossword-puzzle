@@ -102,24 +102,15 @@ void histogram(char sifra[]){
 
 void ceasar(char sifra[]){
     char  ch;
-    int i, znak;
+    int i, n;
 
-    scanf("%d", &znak);
+    scanf("%d", &n);
 
     for(i = 0; sifra[i] != '\0'; ++i){
         ch = sifra[i];
 
-        if(ch >= 'a' && ch <= 'z'){
-            ch = ch - znak;
-
-        if(ch < 'a'){
-            ch = ch + 'z' - 'a' + 1;
-        }
-
-        sifra[i] = ch;
-        }
-        else if(ch >= 'A' && ch <= 'Z'){
-            ch = ch - znak;
+        if(ch >= 'A' && ch <= 'Z'){
+            ch = ch - n;
 
         if(ch < 'A'){
             ch = ch + 'Z' - 'A' + 1;
