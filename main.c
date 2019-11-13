@@ -51,6 +51,13 @@ int main() {
                     printf("Nie je k dispozicii upravena sprava\n");
                 }
 
+            case 'c':
+                if(povodne[0]=='\0') {//overenie ci je pole povodny prazdne
+                    printf("Nie je k dispozicii upravena sprava\n");
+                }
+                ceasar(sifra);
+                break;
+
 
         }
 
