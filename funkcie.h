@@ -39,11 +39,9 @@ int ABC(char povodne[], char sifra[])
 void SIFRA(char sifra[]){
     for (int i = 0; i < MAX; i++)
     {
-        if(sifra[i]=='\0'){
+        if(sifra[i]=='\0') {
             continue;
         }
-        if (i > 0)
-            printf("");
         printf("%c", sifra[i]);
     }
     putchar('\n');
@@ -70,41 +68,56 @@ void d(char povodne[]) {
 
      }
 }
-void histogram(char sifra[]){
-    int i,j,k,hist[N],pocet_vsetkych=0;
-    for(i=0;i<N;i++){//nastavi pocet kazdeho vyskytu pismena na 0
-        hist[i]=0;
-    }
-    for(k=0;k<MAX;k++){//pocita pocet vyskytu kazdeho pismena od a po Z
-        if(sifra[k]>='A'&&sifra[k]<='Z'){
-            hist[sifra[k]-'A']++;
-            pocet_vsetkych++;
-        }
-    }
+void histogram(char sifra[]) {
+    int pocetnosti[N] = { 0 };
+    int text_dlzka = 0;
+    float zz;
 
-
-    for( i = 10; i >= 1; --i){
-        for(j=0;j <N;++j)
+    for (int i = 0; i < MAX; i++)
+    {
+        if (sifra[i] == 0)
         {
-            if( i <= hist[j])
-                putchar('*');
-            else
-                putchar(' ');
+            break;
         }
-        putchar('\n');
+        char znak = sifra[i] - 65;
+        pocetnosti[znak]++;
+        text_dlzka++;
+        zz = pocetnosti[znak] * 10 / text_dlzka;
     }
-    for(i=0;i<N;i++){//vykresli abecedu dole
-        putchar('A'+i);
-    }
-    putchar('\n');
-}
 
+
+
+
+    for (char riadok = zz+1; riadok >= 0; riadok--)
+    {
+        for (char znak = 0; znak < 26; znak++)
+        {
+
+
+            if (pocetnosti[znak] * 100 / text_dlzka > riadok * 10)
+            {
+                putchar ('*');
+            }
+            else
+            {
+                putchar (' ');
+            }
+        }
+        putchar ('\n');
+    }
+
+    for (char i = 0; i < N; i++)
+    {
+        putchar (i + 'A');
+    }
+}
 
 void ceasar(char sifra[]){
     char  ch;
     int i, n;
 
     scanf("%d", &n);
+    if(1<n&&n<25){
 
     for(i = 0; sifra[i] != '\0'; ++i){
         ch = sifra[i];
@@ -121,6 +134,7 @@ void ceasar(char sifra[]){
 }
 
 printf("%s\n", sifra);
+}
 }
 
 
