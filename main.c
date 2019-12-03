@@ -1,12 +1,11 @@
 #include <stdio.h>
-#include "funkcie.h"
-#define MAX 1000
+#include "funkcie.h"//spravil som header s funkciami aby bol kod priehladnejsi
 
 
 int main() {
-    char povodne[MAX]="",sifra[MAX]="",c;
+    char povodne[MAX]="",sifra[MAX]="",c;//definicia premien ktore budeme vyuzivat v maine
 
-    while(c!='k') {//pokial c==k
+    while(c!='k') {
         switch (c = getchar()) {//nacitanie charakteru pre switch
             case 'n' :
                 nacitaniedopola(povodne);
