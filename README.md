@@ -1,0 +1,1 @@
+V nasledúcich súboroch najdete program ktorý pracuje s poliami,desifrovanim,etc.
