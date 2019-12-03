@@ -1,12 +1,11 @@
 //
-// Created by druzb on 5. 11. 2019.
+// Created by Druzbacky on 5. 11. 2019.
 //
 
 #ifndef ZPRPR_FUNKCIE_H
 #define ZPRPR_FUNKCIE_H
 
 #include <stdio.h>
-#include <ctype.h>
 #include <string.h>
 #define MAX 1000 //defina maximalnej velkosti
 #define N 'Z' - 'A' + 1 //abeceda
@@ -15,14 +14,18 @@
 int nacitaniedopola(char povodne[]){
     FILE *fr;
 
-    if ((fr = fopen(SUBOR, "r")) == NULL) {//overenie ci sa subor da otvorit
+    //overenie ci sa subor da otvorit
+    if ((fr = fopen(SUBOR, "r")) == NULL){
         printf("Spravu sa nepodarilo nacitat\n");
         return 0;
     }
-    for (int i = 0; i < MAX; i++) {//for pre rozsah
+
+    //nacitanie prvych 1000znakov
+    for (int i = 0; i < MAX; i++){
         fscanf(fr, "%c", &povodne[i]);//ukladanie do pola
     }
-    if(fclose(fr) == EOF) {
+
+    if(fclose(fr) == EOF){
         printf("Chyba: zatvaranie suboru\n");
         return 0;
     }
@@ -30,9 +33,11 @@ int nacitaniedopola(char povodne[]){
 
 
 void vypispovodnehopola(char povodne[]){
-    if(povodne[0]=='\0') {//overenie ci je pole povodny prazdne
+    //overenie ci je pole povodny prazdne
+    if(povodne[0]=='\0') {
         printf("Sprava nie je nacitana");
     }
+
     for (int i = 0; i < MAX; i++) {
         if(povodne[i]!='\0')
             printf("%c", povodne[i]);
@@ -43,13 +48,19 @@ void vypispovodnehopola(char povodne[]){
 
 int povodnetosifra(char povodne[], char sifra[])
 {
-    int i,k=0;
-    if(povodne[0]=='\0') {//overenie ci je pole povodny prazdne
+    int k=0;
+
+    if(povodne[0]=='\0') {
         printf("Sprava nie je nacitana\n");
     }
-    for (i=0;i< MAX;i++){
-        if((povodne[i]>='A'&&povodne[i]<='Z')||(povodne[i]>='a'&&povodne[i]<='z')){
-            sifra[k]=toupper(povodne[i]);
+
+    for (int i=0;i< MAX;i++){
+        if(povodne[i]>='A'&&povodne[i]<='Z'){
+            sifra[k]=povodne[i];
+            k++;
+        }
+        if(povodne[i]>='a'&&povodne[i]<='z'){
+            sifra[k]=povodne[i]-32; //prevod na velke pismena,tiez mozeme pouzit toupper()
             k++;
         }
 
@@ -59,9 +70,11 @@ int povodnetosifra(char povodne[], char sifra[])
 
 
 void vypis_sifri(char sifra[]){
-    if(sifra[0]=='\0') {//overenie ci je pole povodny prazdne
+
+    if(sifra[0]=='\0') {
         printf("Nie je k dispozicii upravena sprava");
     }
+
     for (int i = 0; i < MAX; i++)
     {
         if(sifra[i]=='\0') {//preskoci prazdy priestor v poli
@@ -75,9 +88,11 @@ void vypis_sifri(char sifra[]){
 
 void dlzkaslova(char povodne[]) {
     int dlzkaslova, counter = 1;
-    if(povodne[0]=='\0') {//overenie ci je pole povodny prazdne
+
+    if(povodne[0]=='\0') {
         printf("Sprava nie je nacitana\n");
     }
+
     scanf("%d", &dlzkaslova);
     if (dlzkaslova > 1 && dlzkaslova < 100) {
         for (int i = 0; i < MAX; i++) {
@@ -96,17 +111,18 @@ void dlzkaslova(char povodne[]) {
 
         }
 
-     }
+    }
 }
 
 
-void histogram(char sifra[]) {
-    int pocetnosti[N] = { 0 };
-    int text_dlzka = 0;
-    if(sifra[0]=='\0') {//overenie ci je pole povodny prazdne
-        printf("Nie je k dispozicii upravena sprava\n");
-    }
+int histogram(char sifra[]) {
+    int pocetnosti[N] = { 0 },text_dlzka = 0;
     float max;
+
+    if(sifra[0]=='\0') {
+        printf("Nie je k dispozicii upravena sprava\n");
+        return 0;
+    }
 
     for (int i = 0; i < MAX; i++)
     {
@@ -114,6 +130,7 @@ void histogram(char sifra[]) {
         {
             break;
         }
+
         char znak = sifra[i] - 'A';
         pocetnosti[znak]++;
         text_dlzka++;
@@ -137,6 +154,7 @@ void histogram(char sifra[]) {
         }
         putchar ('\n');
     }
+
     if(sifra[0]!='\0') {
         for (char i = 0; i < N; i++) {
             putchar(i + 'A');
@@ -150,29 +168,29 @@ void ceasar(char sifra[]){
     char  posun;
     int i, n;
 
-    if(sifra[0]=='\0') {//overenie ci je pole povodny prazdne
+    if(sifra[0]=='\0') {
         printf("Nie je k dispozicii upravena sprava\n");
     }
 
     scanf("%d", &n);
     if(1<n&&n<25){
 
-    for(i = 0; sifra[i] != '\0'; ++i){
-        posun = sifra[i];
+        for(i = 0; sifra[i] != '\0'; ++i){
+            posun = sifra[i];
 
-        if(posun >= 'A' && posun <= 'Z'){
-            posun = posun - n;
+            if(posun >= 'A' && posun <= 'Z'){
+                posun = posun - n;
 
-        if(posun < 'A'){
-            posun = posun + 'Z' - 'A' + 1;
+                if(posun < 'A'){
+                    posun = posun + 'Z' - 'A' + 1;
+                }
+
+                sifra[i] = posun;
+            }
         }
 
-        sifra[i] = posun;
+        printf("%s\n", sifra);
     }
-}
-
-printf("%s\n", sifra);
-}
 }
 
 
