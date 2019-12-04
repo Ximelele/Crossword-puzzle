@@ -13,13 +13,11 @@
 
 void nacitaniedopola(char povodne[]){
     FILE *fr;
-
     //overenie ci sa subor da otvorit
-    if ((fr = fopen(SUBOR, "r")) != NULL){
+    if ((fr = fopen(SUBOR, "r")) == NULL){
         printf("Spravu sa nepodarilo nacitat\n");
         return;
     }
-
     //nacitanie prvych 1000znakov
     for (int i = 0; i < MAX; i++){
         fscanf(fr, "%c", &povodne[i]);//ukladanie do pola
@@ -36,14 +34,15 @@ void vypisanie(char pole[]){
             printf("%c", pole[i]);
     }
 }
-void vypispovodnehopola(char povodne[]){
-    //overenie ci je pole povodny prazdne
-    if(povodne[0]=='\0') {
+void kontrolapola(char pole[]){
+    if(pole[0]=='\0') {
         printf("Sprava nie je nacitana");
+        return;
     }
+}
+void vypispovodnehopola(char povodne[]){
+    kontrolapola(povodne);
     vypisanie(povodne);
-
-
     putchar('\n');
 }
 
@@ -51,11 +50,7 @@ void vypispovodnehopola(char povodne[]){
 int povodnetosifra(char povodne[], char sifra[])
 {
     int k=0;
-
-    if(povodne[0]=='\0') {
-        printf("Sprava nie je nacitana\n");
-    }
-
+    kontrolapola(povodne);
     for (int i=0;i< MAX;i++){
         if(povodne[i]>='A'&&povodne[i]<='Z'){
             sifra[k]=povodne[i];
@@ -72,13 +67,8 @@ int povodnetosifra(char povodne[], char sifra[])
 
 
 void vypis_sifri(char sifra[]){
-
-    if(sifra[0]=='\0') {
-        printf("Nie je k dispozicii upravena sprava");
-    }
-
+    kontrolapola(sifra);
     vypisanie(sifra);
-
     putchar('\n');
 }
 
@@ -86,9 +76,7 @@ void vypis_sifri(char sifra[]){
 void dlzkaslova(char povodne[]) {
     int dlzkaslova, counter = 1;
 
-    if(povodne[0]=='\0') {
-        printf("Sprava nie je nacitana\n");
-    }
+    kontrolapola(povodne);
 
     scanf("%d", &dlzkaslova);
     if (dlzkaslova > 1 && dlzkaslova < 100) {
@@ -116,10 +104,7 @@ int histogram(char sifra[]) {
     int pocetnosti[N] = { 0 },text_dlzka = 0;
     float max;
 
-    if(sifra[0]=='\0') {
-        printf("Nie je k dispozicii upravena sprava\n");
-        return 0;
-    }
+    kontrolapola(sifra);
 
     for (int i = 0; i < MAX; i++)
     {
@@ -165,9 +150,7 @@ void ceasar(char sifra[]){
     char  posun;
     int i, n;
 
-    if(sifra[0]=='\0') {
-        printf("Nie je k dispozicii upravena sprava\n");
-    }
+    kontrolapola(sifra);
 
     scanf("%d", &n);
     if(1<n&&n<25){
