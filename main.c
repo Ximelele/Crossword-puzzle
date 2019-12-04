@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "funkcie.h"//spravil som header s funkciami aby bol kod priehladnejsi
 
-
 int main() {
     char povodne[MAX]="",sifra[MAX]="",c;//definicia premien ktore budeme vyuzivat v maine
 

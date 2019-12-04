@@ -28,24 +28,27 @@ void nacitaniedopola(char povodne[]){
         return;
     }
 }
+
 void vypisanie(char pole[]){
     for (int i = 0; i < MAX; i++) {
-        if(pole[i]!='\0')
+        if(pole[i]!='\0') {
             printf("%c", pole[i]);
+        }
     }
 }
+
 void kontrolapola(char pole[]){
     if(pole[0]=='\0') {
         printf("Sprava nie je nacitana");
         return;
     }
 }
+
 void vypispovodnehopola(char povodne[]){
     kontrolapola(povodne);
     vypisanie(povodne);
     putchar('\n');
 }
-
 
 int povodnetosifra(char povodne[], char sifra[])
 {
@@ -60,11 +63,9 @@ int povodnetosifra(char povodne[], char sifra[])
             sifra[k]=povodne[i]-32; //prevod na velke pismena,tiez mozeme pouzit toupper()
             k++;
         }
-
     }
     return k;//vratenie hodnoty K = velkost pola sifra
 }
-
 
 void vypis_sifri(char sifra[]){
     kontrolapola(sifra);
@@ -72,8 +73,8 @@ void vypis_sifri(char sifra[]){
     putchar('\n');
 }
 
-
 void dlzkaslova(char povodne[]) {
+
     int dlzkaslova, counter = 1;
 
     kontrolapola(povodne);
@@ -98,7 +99,6 @@ void dlzkaslova(char povodne[]) {
 
     }
 }
-
 
 int histogram(char sifra[]) {
     int pocetnosti[N] = { 0 },text_dlzka = 0;
@@ -144,7 +144,6 @@ int histogram(char sifra[]) {
         putchar('\n');
     }
 }
-
 
 void ceasar(char sifra[]){
     char  posun;
