@@ -143,25 +143,25 @@ int histogram(char sifra[]) {
 }
 
 void ceasar(char sifra[]){
-    char  posun;
-    int i, n;
+    char  povodne_pismeno;
+    int sifrovanie;
 
     kontrolapola(sifra);
 
-    scanf("%d", &n);
-    if(1<n&&n<25){
+    scanf("%d", &sifrovanie);
+    if((1<=sifrovanie)&&(sifrovanie<=25)){
 
-        for(i = 0; sifra[i] != '\0'; ++i){
-            posun = sifra[i];
+        for(int pozicia = 0; pozicia<MAX && sifra[pozicia] != '\0'; ++pozicia){
+            povodne_pismeno = sifra[pozicia];
 
-            if(posun >= 'A' && posun <= 'Z'){
-                posun = posun - n;
+            if(povodne_pismeno >= 'A' && povodne_pismeno <= 'Z'){
+                povodne_pismeno = povodne_pismeno - sifrovanie;
 
-                if(posun < 'A'){
-                    posun = posun + 'Z' - 'A' + 1;
+                if(povodne_pismeno < 'A'){ 
+                    povodne_pismeno = povodne_pismeno + 'Z' - 'A' + 1;
                 }
 
-                sifra[i] = posun;
+                sifra[pozicia] = povodne_pismeno;
             }
         }
 
