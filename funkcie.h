@@ -1,3 +1,5 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "cert-err34-c"
 //
 // Created by Druzbacky on 5. 11. 2019.
 //
@@ -97,16 +99,15 @@ void dlzkaslova(char povodne[]) {
     }
 }
 
-int histogram(char sifra[]) {
-    int pocetnosti[N] = { 0 },text_dlzka = 0;
-    float max;
+void histogram(char sifra[]) {
+    int pocetnosti[N]={ 0 },text_dlzka = 0;
+    int max=0;
 
     kontrolapola(sifra);
 
     for (int i = 0; i < MAX; i++)
     {
-        if (sifra[i] == 0)
-        {
+        if (sifra[i] == '\0'){
             break;
         }
 
@@ -116,26 +117,22 @@ int histogram(char sifra[]) {
         max = pocetnosti[znak] * 10 / text_dlzka + 1;
     }
 
-
     for (int riadok = max; riadok >= 0; riadok--)
     {
         for (int znak = 0; znak < N; znak++)
         {
 
-            if (pocetnosti[znak] * 100 / text_dlzka > riadok * 10)
-            {
-                putchar ('*');
-            }
-            else
-            {
-                putchar (' ');
+            if (pocetnosti[znak] * 100 / text_dlzka <= riadok * 10) {
+                putchar(' ');
+            } else {
+                putchar('*');
             }
         }
         putchar ('\n');
     }
 
     if(sifra[0]!='\0') {
-        for (char i = 0; i < N; i++) {
+        for (int i = 0; i < N; i++) {
             putchar(i + 'A');
         }
         putchar('\n');
