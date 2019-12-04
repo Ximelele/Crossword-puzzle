@@ -11,13 +11,13 @@
 #define N 'Z' - 'A' + 1 //abeceda
 #define SUBOR "sifra.txt"
 
-int nacitaniedopola(char povodne[]){
+void nacitaniedopola(char povodne[]){
     FILE *fr;
 
     //overenie ci sa subor da otvorit
-    if ((fr = fopen(SUBOR, "r")) == NULL){
+    if ((fr = fopen(SUBOR, "r")) != NULL){
         printf("Spravu sa nepodarilo nacitat\n");
-        return 0;
+        return;
     }
 
     //nacitanie prvych 1000znakov
@@ -27,21 +27,23 @@ int nacitaniedopola(char povodne[]){
 
     if(fclose(fr) == EOF){
         printf("Chyba: zatvaranie suboru\n");
-        return 0;
+        return;
     }
 }
-
-
+void vypisanie(char pole[]){
+    for (int i = 0; i < MAX; i++) {
+        if(pole[i]!='\0')
+            printf("%c", pole[i]);
+    }
+}
 void vypispovodnehopola(char povodne[]){
     //overenie ci je pole povodny prazdne
     if(povodne[0]=='\0') {
         printf("Sprava nie je nacitana");
     }
+    vypisanie(povodne);
 
-    for (int i = 0; i < MAX; i++) {
-        if(povodne[i]!='\0')
-            printf("%c", povodne[i]);
-    }
+
     putchar('\n');
 }
 
@@ -75,13 +77,8 @@ void vypis_sifri(char sifra[]){
         printf("Nie je k dispozicii upravena sprava");
     }
 
-    for (int i = 0; i < MAX; i++)
-    {
-        if(sifra[i]=='\0') {//preskoci prazdy priestor v poli
-            continue;
-        }
-        printf("%c", sifra[i]);
-    }
+    vypisanie(sifra);
+
     putchar('\n');
 }
 
