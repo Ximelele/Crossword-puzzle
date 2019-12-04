@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #define MAX 1000 //defina maximalnej velkosti
 #define N 'Z' - 'A' + 1 //abeceda
 #define SUBOR "sifra.txt"
@@ -52,19 +53,19 @@ void vypispovodnehopola(char povodne[]){
 
 int povodnetosifra(char povodne[], char sifra[])
 {
-    int k=0;
     kontrolapola(povodne);
+    int velkost=0;
     for (int i=0;i< MAX;i++){
-        if(povodne[i]>='A'&&povodne[i]<='Z'){
-            sifra[k]=povodne[i];
-            k++;
+        if((povodne[i]>='A') && (povodne[i]<='Z')){
+            sifra[velkost]=povodne[i];
+            velkost++; //navysovanie velkosti pola
         }
-        if(povodne[i]>='a'&&povodne[i]<='z'){
-            sifra[k]=povodne[i]-32; //prevod na velke pismena,tiez mozeme pouzit toupper()
-            k++;
+        if((povodne[i]>='a') && (povodne[i]<='z')){
+            sifra[velkost]=toupper(povodne[i]); //prevod na velke pismena,tiez mozeme pouzit toupper()
+            velkost++;//navysovanie velkosti pola
         }
     }
-    return k;//vratenie hodnoty K = velkost pola sifra
+    return velkost;//vratenie hodnoty K = velkost pola sifra
 }
 
 void vypis_sifri(char sifra[]){
