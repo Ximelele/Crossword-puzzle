@@ -38,7 +38,7 @@ void vypisanie(char pole[]){
     }
 }
 
-void kontrolapola(char pole[]){
+void kontrolapola(const char pole[]){
     if(pole[0]=='\0') {
         printf("Sprava nie je nacitana");
         return;
@@ -75,29 +75,25 @@ void vypis_sifri(char sifra[]){
 }
 
 void dlzkaslova(char povodne[]) {
-
     int dlzkaslova, counter = 1;
-
     kontrolapola(povodne);
+    scanf("%d", &dlzkaslova); //ake dlhe slovo chceme hladat
 
-    scanf("%d", &dlzkaslova);
-    if (dlzkaslova > 1 && dlzkaslova < 100) {
-        for (int i = 0; i < MAX; i++) {
-            if(povodne[i]!='\0'){
+    if (dlzkaslova >= 1 && dlzkaslova <= 100) {
+        for (int pozicia = 0; pozicia < MAX; pozicia++) {
+            if(povodne[pozicia]!='\0'){
                 counter++;
             }
-            if(povodne[i+1]==' '||povodne[i+1]=='\0'){
-                if(counter-1==dlzkaslova){
-                    for (int j = i-dlzkaslova+1; j <i+1 ; ++j) {
+            if(povodne[pozicia+1]==' '||povodne[pozicia+1]=='\0'){
+               if(counter-1==dlzkaslova){
+                    for (int j = pozicia-dlzkaslova+1; j <pozicia+1 ; ++j) {
                         putchar(povodne[j]);
                     }
-                    putchar('\n');
+                    putchar('\n'); // vypisanie noveho riadku
                 }
-                counter=0;
+                counter=0;//vynulovie aby isiel od zaciatku
             }
-
         }
-
     }
 }
 
