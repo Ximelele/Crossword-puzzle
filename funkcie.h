@@ -13,6 +13,7 @@
 #define MAX 1000 //defina maximalnej velkosti
 #define N 'Z' - 'A' + 1 //abeceda
 #define SUBOR "sifra.txt"
+#define ZACIATOKPOLE 0
 
 void nacitaniedopola(char povodne[]){
     FILE *fr;
@@ -22,7 +23,7 @@ void nacitaniedopola(char povodne[]){
         return;
     }
     //nacitanie prvych 1000znakov
-    for (int i = 0; i < MAX; i++){
+    for (int i = ZACIATOKPOLE; i < MAX; i++){
         fscanf(fr, "%c", &povodne[i]);//ukladanie do pola
     }
 
@@ -33,7 +34,7 @@ void nacitaniedopola(char povodne[]){
 }
 
 void vypisanie(char pole[]){
-    for (int i = 0; i < MAX; i++) {
+    for (int i = ZACIATOKPOLE; i < MAX; i++) {
         if(pole[i]!='\0') {
             printf("%c", pole[i]);
         }
@@ -41,7 +42,7 @@ void vypisanie(char pole[]){
 }
 
 void kontrolapola(const char pole[]){
-    if(pole[0]=='\0') {
+    if(pole[ZACIATOKPOLE]=='\0') {
         printf("Sprava nie je nacitana");
         return;
     }
@@ -52,12 +53,11 @@ void vypispovodnehopola(char povodne[]){
     vypisanie(povodne);
     putchar('\n');
 }
-
 int povodnetosifra(char povodne[], char sifra[])
 {
     kontrolapola(povodne);
     int velkost=0;
-    for (int i=0;i< MAX;i++){
+    for (int i=ZACIATOKPOLE;i< MAX;i++){
         if((povodne[i]>='A') && (povodne[i]<='Z')){
             sifra[velkost]=povodne[i];
             velkost++; //navysovanie velkosti pola
@@ -67,7 +67,7 @@ int povodnetosifra(char povodne[], char sifra[])
             velkost++;//navysovanie velkosti pola
         }
     }
-    return velkost;//vratenie hodnoty K = velkost pola sifra
+    return velkost;//vratenie hodnoty velkost = velkost pola sifra
 }
 
 void vypis_sifri(char sifra[]){
@@ -82,7 +82,7 @@ void dlzkaslova(char povodne[]) {
     scanf("%d", &dlzkaslova); //ake dlhe slovo chceme hladat
 
     if (dlzkaslova >= 1 && dlzkaslova <= 100) {
-        for (int pozicia = 0; pozicia < MAX; pozicia++) {
+        for (int pozicia = ZACIATOKPOLE; pozicia < MAX; pozicia++) {
             if(povodne[pozicia]!='\0'){
                 counter++;
             }
@@ -105,7 +105,7 @@ void histogram(char sifra[]) {
 
     kontrolapola(sifra);
 
-    for (int i = 0; i < MAX; i++)
+    for (int i = ZACIATOKPOLE; i < MAX; i++)
     {
         if (sifra[i] == '\0'){
             break;
@@ -117,9 +117,9 @@ void histogram(char sifra[]) {
         max = pocetnosti[znak] * 10 / text_dlzka + 1;
     }
 
-    for (int riadok = max; riadok >= 0; riadok--)
+    for (int riadok = max; riadok >= ZACIATOKPOLE; riadok--)
     {
-        for (int znak = 0; znak < N; znak++)
+        for (int znak = ZACIATOKPOLE; znak < N; znak++)
         {
 
             if (pocetnosti[znak] * 100 / text_dlzka <= riadok * 10) {
@@ -131,8 +131,8 @@ void histogram(char sifra[]) {
         putchar ('\n');
     }
 
-    if(sifra[0]!='\0') {
-        for (int i = 0; i < N; i++) {
+    if(sifra[ZACIATOKPOLE]!='\0') {
+        for (int i = ZACIATOKPOLE; i < N; i++) {
             putchar(i + 'A');
         }
         putchar('\n');
@@ -148,7 +148,7 @@ void ceasar(char sifra[]){
     scanf("%d", &sifrovanie);
     if((1<=sifrovanie)&&(sifrovanie<=25)){
 
-        for(int pozicia = 0; pozicia<MAX && sifra[pozicia] != '\0'; ++pozicia){
+        for(int pozicia = ZACIATOKPOLE; pozicia<MAX && sifra[pozicia] != '\0'; ++pozicia){
             povodne_pismeno = sifra[pozicia];
 
             if(povodne_pismeno >= 'A' && povodne_pismeno <= 'Z'){
