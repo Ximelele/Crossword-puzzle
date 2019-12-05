@@ -154,7 +154,7 @@ void ceasar(char sifra[]){
             if(povodne_pismeno >= 'A' && povodne_pismeno <= 'Z'){
                 povodne_pismeno = povodne_pismeno - sifrovanie;
 
-                if(povodne_pismeno < 'A'){ 
+                if(povodne_pismeno < 'A'){
                     povodne_pismeno = povodne_pismeno + 'Z' - 'A' + 1;
                 }
 
