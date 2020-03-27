@@ -1,4 +1,4 @@
-MIP-FIIT/stvrtok-14-00-d-sitarcik-neparny-Ximelele
+**MIP-FIIT/stvrtok-14-00-d-sitarcik-neparny-Ximelele**
 
 Nasledujúce súbory obsahuje program ktorý pracuje s poliami,desifrovanim,výpisom atď.
 
@@ -18,7 +18,7 @@ Case 'h' : Percentuálny histogram počtu písmen
 Case 'c' : Dešifrovanie zakódovanej správy v šifrovanom poli
 
 
-Techniky použité pri refaktoringu:
+**Techniky použité pri refaktoringu:**
 
 -Odstranenie magických čísiel t.j. zadefinovanie čísiel ako názov konštanty
 
