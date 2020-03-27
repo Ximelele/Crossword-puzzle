@@ -1,34 +1,47 @@
+// nacitanie najviac N prvych roznych slov do N-prvkoveho pola ukazovatelov na retazce
+// v N-prvkovom poli celych cisel si pamatame pocty vyskytov
 #include <stdio.h>
-#include "funkcie.h"//spravil som header s funkciami aby bol kod priehladnejsi
+#include <stdlib.h>
+#include <string.h>
+#include "funkcie.h"
+#define N 3
+#define SUBOR "cisla1.txt"
+
 
 
 int main() {
-    char povodne[MAX]="",sifra[MAX]="",c;//definicia premien ktore budeme vyuzivat v maine
+    char **hadanka;
+    int stlpec=0,riadok=0,*index[26],x=65,pocet[26];
+    nacitaj_velkost(&riadok,&stlpec);
 
-    while(c!='k') {
-        switch (c = getchar()) {//nacitanie charakteru pre switch
-            case 'n' :
-                nacitaniedopola(povodne);
-                break;
-            case 'v':
-                vypispovodnehopola(povodne);
-                break;
-            case 'u':
-                povodnetosifra(povodne, sifra);
-                break;
-            case 's':
-                vypis_sifri(sifra);
-                break;
-            case 'd':
-                dlzkaslova(povodne);
-                break;
-            case 'h':
-                histogram(sifra);
-                break;
-            case 'c':
-                ceasar(sifra);
-                break;
-        }
+    hadanka=(char**) malloc(riadok* sizeof(char*));
+    for (int i = 0; i < riadok; ++i) {
+        hadanka[i]=(char*) calloc(stlpec,sizeof(char*));
     }
+
+    nacitaj_pole(hadanka,riadok,stlpec);
+    for (int k = 0; k < 26; ++k) {
+        index[k]=(int*) malloc(2*N*sizeof(int*));
+        index[0][k]=-1;//na kazdy index dopredu nastavim ze sa tam nenachadzaju a nasledne ich doplnam za pozicie
+        index[k][0]=x++;
+        pocet[k]=-1;
+    }
+
+    vypis_pola(hadanka,riadok,stlpec);
+    pocet_znak(hadanka,index,riadok,stlpec,pocet);
+    nacitanie_slov(hadanka,index,riadok,stlpec,pocet);
+
+
+
+
+
+
+
+
+
+
+    uvolni(hadanka,riadok);
+
+
     return 0;
 }
