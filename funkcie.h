@@ -1,170 +1,120 @@
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "cert-err34-c"
-//
-// Created by Druzbacky on 5. 11. 2019.
-//
-
 #ifndef ZPRPR_FUNKCIE_H
 #define ZPRPR_FUNKCIE_H
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <ctype.h>
-#define MAX 1000 //defina maximalnej velkosti
-#define N 'Z' - 'A' + 1 //abeceda
-#define SUBOR "sifra.txt"
-#define ZACIATOKPOLE 0
+#define SUBOR "cisla1.txt"
+#define N 3
 
-void nacitaniedopola(char povodne[]){
-    FILE *fr;
-    //overenie ci sa subor da otvorit
-    if ((fr = fopen(SUBOR, "r")) == NULL){
-        printf("Spravu sa nepodarilo nacitat\n");
-        return;
-    }
-    //nacitanie prvych 1000znakov
-    for (int i = ZACIATOKPOLE; i < MAX; i++){
-        fscanf(fr, "%c", &povodne[i]);//ukladanie do pola
-    }
-
-    if(fclose(fr) == EOF){
-        printf("Chyba: zatvaranie suboru\n");
-        return;
+int otvaranie(FILE *fr){
+    if((fr=fopen(SUBOR,"r"))==NULL) {
+        printf("Neda sa otvorit");
+        return 0;
     }
 }
+int zatvaranie(FILE *fr){
+    if((fclose(fr))==EOF) {
+        printf("Neda sa zatvorit");
+        return 0;
+    }
+}
+void nacitaj_velkost(int *riadok,int *stlpec){
+    FILE *fr = NULL;
+    fr= (FILE *) otvaranie(fr);
+    int line=0,x=0,y=0;
+    while(line!=1) {
+        fscanf(fr,"%d %d", &x, &y);
+        line++;
+    }
+    *riadok=x;
+    *stlpec=y;
+    zatvaranie(fr);
+}
+void nacitaj_pole(char **pole,int riadok, int stlpec){
+    FILE *fr=NULL;
+    fr= (FILE *) otvaranie(fr);
+    fseek(fr,5,SEEK_SET);
+    for (int i = 0; i < riadok; ++i) {
+        for (int j = 0; j < stlpec+1; ++j) {
+            fscanf(fr,"%c",&pole[i][j]);
+        }
+    }
+    zatvaranie(fr);
+}
 
-void vypisanie(char pole[]){
-    for (int i = ZACIATOKPOLE; i < MAX; i++) {
-        if(pole[i]!='\0') {
-            printf("%c", pole[i]);
+void vypis_pola(char **hadanka,int riadok, int stlpec){
+    for (int j = 0; j < riadok; ++j) {
+        for (int i = 0; i < stlpec +1; ++i) {
+            printf("%c",hadanka[j][i]);
         }
     }
 }
-
-void kontrolapola(const char pole[]){
-    if(pole[ZACIATOKPOLE]=='\0') {
-        printf("Sprava nie je nacitana");
-        return;
-    }
-}
-
-void vypispovodnehopola(char povodne[]){
-    kontrolapola(povodne);
-    vypisanie(povodne);
-    putchar('\n');
-}
-int povodnetosifra(char povodne[], char sifra[])
-{
-    kontrolapola(povodne);
-    int velkost=0;
-    for (int i=ZACIATOKPOLE;i< MAX;i++){
-        if((povodne[i]>='A') && (povodne[i]<='Z')){
-            sifra[velkost]=povodne[i];
-            velkost++; //navysovanie velkosti pola
-        }
-        if((povodne[i]>='a') && (povodne[i]<='z')){
-            sifra[velkost]=toupper(povodne[i]); //prevod na velke pismena,tiez mozeme pouzit toupper()
-            velkost++;//navysovanie velkosti pola
-        }
-    }
-    return velkost;//vratenie hodnoty velkost = velkost pola sifra
-}
-
-void vypis_sifri(char sifra[]){
-    kontrolapola(sifra);
-    vypisanie(sifra);
-    putchar('\n');
-}
-
-void dlzkaslova(char povodne[]) {
-    int dlzkaslova, counter = 1;
-    kontrolapola(povodne);
-    scanf("%d", &dlzkaslova); //ake dlhe slovo chceme hladat
-
-    if (dlzkaslova >= 1 && dlzkaslova <= 100) {
-        for (int pozicia = ZACIATOKPOLE; pozicia < MAX; pozicia++) {
-            if(povodne[pozicia]!='\0'){
-                counter++;
-            }
-            if(povodne[pozicia+1]==' '||povodne[pozicia+1]=='\0'){
-               if(counter-1==dlzkaslova){
-                    for (int j = pozicia-dlzkaslova+1; j <pozicia+1 ; ++j) {
-                        putchar(povodne[j]);
+void pocet_znak(char **hadanka,int *index[],int riadky,int stlpce,int pocet[]) {
+    int allocovane[26]={6};
+    for (int riadok = 0; riadok < riadky; riadok++) {
+        for (int stlpec = 0; stlpec < stlpce; stlpec++) {
+            for (int abeceda = 0; abeceda < 26; abeceda++) { //ak bude pocet[abeceda]==NULL the index[k][pocet[k]=-1
+                if(allocovane[abeceda]==pocet[abeceda]){
+                    index[abeceda]=(int*)realloc(index[abeceda],N* sizeof(int));//strasny sef
+                    allocovane[abeceda]+=N* sizeof(int);
+                    pocet[abeceda]+=2;
+                    index[abeceda][pocet[abeceda]-1]=riadok;
+                    index[abeceda][pocet[abeceda]]=stlpec;
+                }
+                else if (hadanka[riadok][stlpec]==index[abeceda][0]){
+                    if(pocet[abeceda]==-1) {
+                        pocet[abeceda]=0;
                     }
-                    putchar('\n'); // vypisanie noveho riadku
-                }
-                counter=0;//vynulovie aby isiel od zaciatku
+                    pocet[abeceda]+=2;
+                    index[abeceda][pocet[abeceda]-1]=riadok;
+                    index[abeceda][pocet[abeceda]]=stlpec;
+                    break;
+                }// pole na alakovanie, zapis > naalokovane
             }
+        }
+    }
+    //pogchamp dal si to ako sef|| potreboval som pocet nastavit na -1 namiesto 0
+    for (int i = 0; i < 26; i++) {
+        for (int k = 0; k < pocet[i]+1; k++) {
+            printf("%d ",index[i][k]);
         }
     }
 }
 
-void histogram(char sifra[]) {
-    int pocetnosti[N]={ 0 },text_dlzka = 0;
-    int max=0;
-
-    kontrolapola(sifra);
-
-    for (int i = ZACIATOKPOLE; i < MAX; i++)
-    {
-        if (sifra[i] == '\0'){
-            break;
-        }
-
-        char znak = sifra[i] - 'A';
-        pocetnosti[znak]++;
-        text_dlzka++;
-        max = pocetnosti[znak] * 10 / text_dlzka + 1;
+void nacitanie_slov(char **hadanka,int *index[], int riadky,int stlpce,int pocet[]) {
+    FILE *fr;
+    fr = (FILE *) otvaranie(fr);
+    int line = 0;
+    char slovo[20]="";
+    while (line != riadky + 1) {
+        if (getc(fr) == '\n')
+            line++;
     }
-
-    for (int riadok = max; riadok >= ZACIATOKPOLE; riadok--)
-    {
-        for (int znak = ZACIATOKPOLE; znak < N; znak++)
-        {
-
-            if (pocetnosti[znak] * 100 / text_dlzka <= riadok * 10) {
-                putchar(' ');
-            } else {
-                putchar('*');
+    fscanf(fr, "%s", slovo);//musis prebehnut index, a ci sa z toho da poskladat to slovo,tak nebud kokot a zajtra to prerob, a do vsetkych smerov ty autista| sprav for cyklus o hodnote 26 aby si nasiel v indexe adresi
+    for (int i = 0; i < riadky; ++i) {
+        for (int j = 0; j <stlpce; ++j) {
+            for (int k = 0; k < 26; k++) {
+                if (slovo[0] == index[k][i] && index[k][pocet[i]] != -1)
+                   printf("im here");
             }
         }
-        putchar ('\n');
     }
 
-    if(sifra[ZACIATOKPOLE]!='\0') {
-        for (int i = ZACIATOKPOLE; i < N; i++) {
-            putchar(i + 'A');
-        }
-        putchar('\n');
-    }
+
+    //vypis_pola(hadanka,riadky,stlpce);
 }
 
-void ceasar(char sifra[]){
-    char  povodne_pismeno;
-    int sifrovanie;
 
-    kontrolapola(sifra);
-
-    scanf("%d", &sifrovanie);
-    if((1<=sifrovanie)&&(sifrovanie<=25)){
-
-        for(int pozicia = ZACIATOKPOLE; pozicia<MAX && sifra[pozicia] != '\0'; ++pozicia){
-            povodne_pismeno = sifra[pozicia];
-
-            if(povodne_pismeno >= 'A' && povodne_pismeno <= 'Z'){
-                povodne_pismeno = povodne_pismeno - sifrovanie;
-
-                if(povodne_pismeno < 'A'){
-                    povodne_pismeno = povodne_pismeno + 'Z' - 'A' + 1;
-                }
-
-                sifra[pozicia] = povodne_pismeno;
-            }
-        }
-
-        printf("%s\n", sifra);
-    }
+void uvolni(char **slovnik,int riadok) {
+    int i;
+    for (i = 0; i < riadok; i++)
+        free(slovnik[i]);
 }
+
+
+
 
 
 
