@@ -43,7 +43,6 @@ void nacitaj_pole(char **pole,int riadok, int stlpec){
     }
     zatvaranie(fr);
 }
-
 void vypis_pola(char **hadanka,int riadok, int stlpec){
     for (int j = 0; j < riadok; ++j) {
         for (int i = 0; i < stlpec +1; ++i) {
@@ -51,7 +50,6 @@ void vypis_pola(char **hadanka,int riadok, int stlpec){
         }
     }
 }
-
 void pocet_znak(char **hadanka,int *index[],int riadky,int stlpce,int pocet[]) {
     int allocovane[26]={6};
     for (int riadok = 0; riadok < riadky; riadok++) {
@@ -85,32 +83,78 @@ void pocet_znak(char **hadanka,int *index[],int riadky,int stlpce,int pocet[]) {
     }
      */
 }
-
+void skrtanie_slovo(char **hadanka,int ki,int kj,int riadky,int stlpce,int len,char slovo[]) {
+    int k=0;
+    for (int i = ki; i < riadky; i++) {
+        for (int j = kj; j < stlpce; j++) {
+            if((kj+1 <stlpce && hadanka[ki][kj+1] == slovo[kj+1])||(kj+1 >=0 && islower(hadanka[ki][kj+1]) == slovo[kj+1]+32)) {
+                k++;
+            }
+            else if((ki+1 <riadky && hadanka[ki+1][kj] == slovo[ki+1])||(ki+1 >=0 && islower(hadanka[ki+1][kj]) == slovo[ki+1]+32)) {
+                k++;
+            }
+            else if((ki-1 >=0 && hadanka[ki-1][kj] == slovo[ki-1])||(ki-1 >=0 && islower(hadanka[ki-1][kj]) == slovo[ki-1]+32)) {
+                k++;
+            }
+            else if((kj-1 >=0 && hadanka[ki][kj-1] ==slovo[kj-1])||(kj-1 >=0 && islower(hadanka[ki][kj-1]) == slovo[kj-1]+32)) {
+                k++;
+            }
+            if(k==len){
+                vypis_pola(hadanka,riadky,stlpce);
+                break;
+            }
+        }
+    }
+}
+void hladaj_slovo(char **hadanka,int ki,int kj,int riadky,int stlpce,int len,char slovo[]){
+    int k=0;
+    for (int i = 0; i < riadky; i++) {
+        for (int j = 0; j < stlpce; j++) {
+            if((kj+1 <stlpce && hadanka[ki][kj+1] == slovo[kj+1])||(kj+1 >=0 && islower(hadanka[ki][kj+1]) == slovo[kj+1]+32)) {
+                k++;
+            }
+            else if((ki+1 <riadky && hadanka[ki+1][kj] == slovo[ki+1])||(ki+1 >=0 && islower(hadanka[ki+1][kj]) == slovo[ki+1]+32)) {
+                k++;
+            }
+            else if((ki-1 >=0 && hadanka[ki-1][kj] == slovo[ki-1])||(ki-1 >=0 && islower(hadanka[ki-1][kj]) == slovo[ki-1]+32)) {
+                k++;
+            }
+            else if((kj-1 >=0 && hadanka[ki][kj-1] ==slovo[kj-1])||(kj-1 >=0 && islower(hadanka[ki][kj-1]) == slovo[kj-1]+32)) {
+                k++;
+            }
+            if(k==len){
+                putchar('1');
+                break;
+            }
+        }
+    }
+    putchar('\n');
+    skrtanie_slovo(hadanka,ki,kj,riadky,stlpce,len,slovo);
+}
 void nacitanie_slov(char **hadanka,int *index[], int riadky,int stlpce,int pocet[]) {
     FILE *fr;
     fr = (FILE *) otvaranie(fr);
-    int line = 0,ki=0,kj=0;
+    int line = 0,ki=0,kj=0,slovoind=0;
     char slovo[20]="";
     while (line != riadky + 1) {
         if (getc(fr) == '\n')
             line++;
     }
-    fscanf(fr, "%s", slovo);//musis prebehnut index, a ci sa z toho da poskladat to slovo,tak nebud kokot a zajtra to prerob, a do vsetkych smerov ty autista| sprav for cyklus o hodnote 26 aby si nasiel v indexe adresi
-
-    for (int i = 0; i < 26; i++) {
-        for (int k = 0; k < pocet[i]+1; k++) {
-            if (slovo[0] == index[i][0]){
-                printf("%d ",index[i][k]);
-                ki=index[i][1];
-                kj=index[i][2];
-                break;
+   fscanf(fr, "%s", slovo);//dolezite je poradie ty tupy chujS
+        slovoind=slovo[0];
+        for (int i = 0; i < 26; i++) {
+        if (slovoind == index[i][0]){
+            for (int k = 0; k < pocet[i]+1; k++) {
+                    ki = index[i][pocet[i]];//podla poctu vyskytov,ak sa nenajde pri prvom zisti ci je nejaky iny ..atd.
+                    kj = index[i][pocet[i]];
+                    printf("%d %d ", ki, kj);
+                    int len=strlen(slovo);
+                    hladaj_slovo(hadanka,ki,kj,riadky,stlpce,len,slovo);
+                    break;
+               }
             }
         }
-    }
-    printf("%d %d",ki,kj);
-
-
-    //vypis_pola(hadanka,riadky,stlpce);
+    //
 }
 
 
