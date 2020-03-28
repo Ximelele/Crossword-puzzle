@@ -51,6 +51,7 @@ void vypis_pola(char **hadanka,int riadok, int stlpec){
         }
     }
 }
+
 void pocet_znak(char **hadanka,int *index[],int riadky,int stlpce,int pocet[]) {
     int allocovane[26]={6};
     for (int riadok = 0; riadok < riadky; riadok++) {
@@ -76,31 +77,37 @@ void pocet_znak(char **hadanka,int *index[],int riadky,int stlpce,int pocet[]) {
         }
     }
     //pogchamp dal si to ako sef|| potreboval som pocet nastavit na -1 namiesto 0
+    /*
     for (int i = 0; i < 26; i++) {
         for (int k = 0; k < pocet[i]+1; k++) {
             printf("%d ",index[i][k]);
         }
     }
+     */
 }
 
 void nacitanie_slov(char **hadanka,int *index[], int riadky,int stlpce,int pocet[]) {
     FILE *fr;
     fr = (FILE *) otvaranie(fr);
-    int line = 0;
+    int line = 0,ki=0,kj=0;
     char slovo[20]="";
     while (line != riadky + 1) {
         if (getc(fr) == '\n')
             line++;
     }
     fscanf(fr, "%s", slovo);//musis prebehnut index, a ci sa z toho da poskladat to slovo,tak nebud kokot a zajtra to prerob, a do vsetkych smerov ty autista| sprav for cyklus o hodnote 26 aby si nasiel v indexe adresi
-    for (int i = 0; i < riadky; ++i) {
-        for (int j = 0; j <stlpce; ++j) {
-            for (int k = 0; k < 26; k++) {
-                if (slovo[0] == index[k][i] && index[k][pocet[i]] != -1)
-                   printf("im here");
+
+    for (int i = 0; i < 26; i++) {
+        for (int k = 0; k < pocet[i]+1; k++) {
+            if (slovo[0] == index[i][0]){
+                printf("%d ",index[i][k]);
+                ki=index[i][1];
+                kj=index[i][2];
+                break;
             }
         }
     }
+    printf("%d %d",ki,kj);
 
 
     //vypis_pola(hadanka,riadky,stlpce);
