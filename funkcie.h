@@ -85,120 +85,127 @@ void pocet_znak(char **hadanka,int *index[],int riadky,int stlpce,int pocet[]) {
 }
 void skrt_vpravo(char **hadanka,int ki,int kj,int riadky,int stlpce,int len,char slovo[]) {
     int k=0;
-    while (ki != -1 && ki != riadky+1 && kj != -1 && kj != stlpce+1) {
-
-        if ((kj + 1 < stlpce && hadanka[ki][kj + 1] == slovo[kj + 1]) ||hadanka[ki][kj]==slovo[kj]||(kj + 1 < stlpce && islower(hadanka[ki][kj + 1]) == slovo[kj + 1] + 32) ||islower(hadanka[ki][kj]) == slovo[kj] + 32) {//vpravo
-            if(!islower(hadanka[ki][kj]))
-                hadanka[ki][kj] += 32;
-            kj++;
-            k++;
-
+    while (k!=len) {
+        if(!islower(hadanka[ki][kj])) {
+            hadanka[ki][kj] += 32;
         }
-        if (k == len) {
-            break;
-        }
+        kj++;
+        k++;
     }
     vypis_pola(hadanka,riadky,stlpce);
 }
 void skrt_dole(char **hadanka,int ki,int kj,int riadky,int stlpce,int len,char slovo[]) {
     int k=0;
-    while (ki != -1 && ki != riadky+1 && kj != -1 && kj != stlpce+1) {
-
-        if ((ki + 1 < riadky && hadanka[ki + 1][kj] == slovo[ki + 1]) ||hadanka[ki][kj] == slovo[ki] ||(ki + 1 <riadky && islower(hadanka[ki + 1][kj]) == slovo[ki + 1] + 32)||islower(hadanka[ki][kj]) == slovo[ki] + 32) {//dole
-            if(!islower(hadanka[ki][kj]))
-                hadanka[ki][kj]+=32;
-            ki++;
-            k++;
+    while (k!=len) {
+        if(!islower(hadanka[ki][kj])){
+            hadanka[ki][kj]+=32;
         }
-        if (k == len) {
-            break;
-        }
+        ki++;
+        k++;
     }
     vypis_pola(hadanka,riadky,stlpce);
 }
-void skrtanie_slovo(char **hadanka,int ki,int kj,int riadky,int stlpce,int len,char slovo[]) {
+void skrt_hore(char **hadanka,int ki,int kj,int riadky,int stlpce,int len,char slovo[]){
     int k=0;
     char pole[10];
     int ki_p=ki,kj_p=kj;
     while (ki != -1 && ki != riadky+1 && kj != -1 && kj != stlpce+1) {
 
-        if ((kj + 1 < stlpce && hadanka[ki][kj + 1] == slovo[kj + 1])||hadanka[ki][kj] == slovo[kj] ||(kj + 1 < stlpce && islower(hadanka[ki][kj + 1]) == slovo[kj + 1] + 32)||islower(hadanka[ki][kj]) == slovo[kj] + 32) {//vpravo
-            hadanka[ki][kj]+=32;
-            k++;
-            kj++;
-        }
-        if ((ki + 1 < riadky && hadanka[ki + 1][kj] == slovo[ki + 1]) ||hadanka[ki][kj] == slovo[ki] ||(ki + 1 <riadky && islower(hadanka[ki + 1][kj]) == slovo[ki + 1] + 32)||islower(hadanka[ki][kj]) == slovo[ki] + 32) {//dole
-            if(!islower(hadanka[ki][kj]))
-                hadanka[ki][kj]+=32;
-            ki++;
-            k++;
-        }
-        if(k==len){
+        if (k == len) {
             break;
         }
-        //  if((ki-1 >=0 && hadanka[ki-1][kj] == slovo[ki-1])||(ki-1 >=0 && islower(hadanka[ki-1][kj]) == slovo[ki-1]+32)) {
-        //     ki--;
-        //  }
-        //if((kj-1 >=0 && hadanka[ki][kj-1] ==slovo[kj-1])||(kj-1 >=0 && islower(hadanka[ki][kj-1]) == slovo[kj-1]+32)) {
-        //      kj--;
-        //  }
+        if ((ki - 1 >= 0 && hadanka[ki - 1][kj] == slovo[ki - 1]) ||
+            (ki - 1 >= 0 && islower(hadanka[ki - 1][kj]) == slovo[ki - 1] + 32)) {
+            ki--;
+        }
     }
-
 }
-void hladaj_slovo(char **hadanka,int ki,int kj,int riadky,int stlpce,int len,char slovo[]){
-    int k=0,vpravo=0,dole=0;
-    int ki_p=ki,kj_p=kj;
+void skrt_vlavo(char **hadanka,int ki,int kj,int riadky,int stlpce,int len,char slovo[]) {
+    int k = 0;
+    char pole[10];
+    int ki_p = ki, kj_p = kj;
+    while (ki != -1 && ki != riadky + 1 && kj != -1 && kj != stlpce + 1) {
+        if (k == len)
+            break;
+        if ((kj - 1 >= 0 && hadanka[ki][kj - 1] == slovo[kj - 1]) ||
+            (kj - 1 >= 0 && islower(hadanka[ki][kj - 1]) == slovo[kj - 1] + 32)) {
+            kj--;
+        }
+    }
+}
+
+int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo[],int len){
+    int vpravo=1,dole=1,ki_p=ki,kj_p=kj,len_cyklu=0,k=0;
+
     while (ki != -1 && ki != riadky+1 && kj != -1 && kj != stlpce+1) {
-            if((kj+1 <stlpce && hadanka[ki][kj+1] == slovo[kj+1])||hadanka[ki][kj] == slovo[kj]||(kj+1 <stlpce && islower(hadanka[ki][kj+1]) == slovo[kj+1]+32)) {//vpravo
-                kj++;
+            if((kj+1 <stlpce &&hadanka[ki][kj+1]==slovo[k+1])||hadanka[ki][kj+1]==(slovo[k+1]+=32)) {//vpravo
+                k++;
                 vpravo++;
-
+                kj++;
             }
-            else if((ki+1 <riadky && hadanka[ki+1][kj] == slovo[ki+1])||hadanka[ki][kj]==slovo[ki]||(ki+1 <riadky && islower(hadanka[ki+1][kj]) == islower(slovo[ki+1]))) {//dole
-                ki++;
+            if((ki+1 <riadky && hadanka[ki+1][kj] == (slovo[k+1]+=32))) {//dole
+                k++;
                 dole++;
+                ki++;
+            }
+        if(vpravo==len-1){
+            putchar('\n');
+            skrt_vpravo(hadanka,ki_p,kj_p,riadky,stlpce,len,slovo);
+            vpravo=0;
+            return 1;
+            break;
+        }
+        if(dole==len-1){
+            putchar('\n');
+            skrt_dole(hadanka,ki_p,kj_p,riadky,stlpce,len,slovo);
+            dole=0;
+            return 1;
+            break;
+        }
+        len_cyklu++;
+        if(len_cyklu==len+1)
+            break;
+    }
+    return 0;
+}
 
+void hladaj_slovo_podlaind(char **hadanka,int riadky,int stlpce,char slovo[],int pocet[],int *index[]){
+    int k=0,ki=0,kj=0,number=1;
+    int slovoind =slovo[0];
+    int len = strlen(slovo);
+
+    for (int i = 0; i < 26; i++) {
+        if (slovoind == index[i][0]) {
+            for (int j = 0; j < pocet[i]+1; j++) {
+                ki=index[i][number++];
+                kj=index[i][number];
+                printf("%d %d",ki,kj);
+                k=hladanie_slova(hadanka,ki,kj,riadky,stlpce,slovo,len);
+                if(k==0){
+                    ki=index[i][++number];
+                    kj=index[i][++number];
+                    k=hladanie_slova(hadanka,ki,kj,riadky,stlpce,slovo,len);
+                }
+                if(k==1)
+                    break;
             }
-            if(vpravo==len){
-                putchar('\n');
-                skrt_vpravo(hadanka,ki_p,kj_p,riadky,stlpce,len,slovo);
-                vpravo=0;
-                break;
-            }
-            if(dole==len){
-                putchar('\n');
-                skrt_dole(hadanka,ki_p,kj_p,riadky,stlpce,len,slovo);
-                dole=0;
-                break;
-            }
+        }
     }
     putchar('\n');
 }
 void nacitanie_slov(char **hadanka,int *index[], int riadky,int stlpce,int pocet[]) {
     FILE *fr;
     fr = (FILE *) otvaranie(fr);
-    int line = 0,ki=0,kj=0,slovoind=0;
+    int line = 0,ki=0,kj=0,slovoind=0,kokotina;
     char slovo[20]="";
     while (line != riadky + 1) {
         if (getc(fr) == '\n')
             line++;
     }
-    while( (fscanf(fr, "%s", slovo))!=EOF) {//dolezite je poradie ty tupy chujS
-        slovoind = slovo[0];
-        for (int i = 0; i < 26; i++) {
-            if (slovoind == index[i][0]) {
-                for (int k = 0; k < pocet[i] + 1; k++) {
-                    ki = index[i][1];//podla poctu vyskytov,ak sa nenajde pri prvom zisti ci je nejaky iny ..atd.
-                    kj = index[i][2];
-                    printf("%d %d ", ki, kj);
-                    int len = strlen(slovo);
-                    hladaj_slovo(hadanka, ki, kj, riadky, stlpce, len, slovo);
-                    break;
-                }
-            }
-        }
+    while( (fscanf(fr, "%s", slovo))!=EOF) {//dolezite je poradie ty tupy chuj
+        hladaj_slovo_podlaind(hadanka, riadky, stlpce, slovo,pocet,index);
     }
-    //
+
 }
 
 
