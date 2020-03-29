@@ -75,13 +75,6 @@ void pocet_znak(char **hadanka,int *index[],int riadky,int stlpce,int pocet[]) {
         }
     }
     //pogchamp dal si to ako sef|| potreboval som pocet nastavit na -1 namiesto 0
-    /*
-    for (int i = 0; i < 26; i++) {
-        for (int k = 0; k < pocet[i]+1; k++) {
-            printf("%d ",index[i][k]);
-        }
-    }
-     */
 }
 void skrt_vpravo(char **hadanka,int ki,int kj,int riadky,int stlpce,int len,char slovo[]) {
     int k=0;
@@ -113,14 +106,8 @@ void skrt_hore(char **hadanka,int ki,int kj,int riadky,int stlpce,int len,char s
             hadanka[ki][kj]+=32;
         ki--;
         k++;
-    }/*
-    if ((ki-1 >= 0 && hadanka[ki - 1][kj] == slovo[k]) ||(ki-1 >= 0 && hadanka[ki-1][kj]) == (slovo[ki+1] + 32)) {
-        ki--;
-        k++;
-        hore++;
-
     }
-    */
+    vypis_pola(hadanka,riadky,stlpce);
 }
 void skrt_vlavo(char **hadanka,int ki,int kj,int riadky,int stlpce,int len) {
     int k=0;
@@ -142,21 +129,26 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
 
     while (ki != -1 && ki != riadky+1 && kj != -1 && kj != stlpce+1) {
 
-            if((kj+1 <stlpce &&hadanka[ki][kj+1]==slovo[k+1])||hadanka[ki][kj+1]==(slovo[k+1]+=32)) {//vpravo
-                k++;
-                vpravo++;
-                kj++;
-            }
-            if((ki+1 <riadky && hadanka[ki+1][kj] == slovo[k+1])||(ki+1 <riadky && hadanka[ki+1][kj] == (slovo[k+1]+=32))) {//dole
-                k++;
-                dole++;
-                ki++;
-            }
-            if ((hadanka[ki][kj-1] == p[k+1])||(kj - 1 >= 0 && hadanka[ki][kj-1] == (p[k+1]+=32))) {
-                k++;
-                vlavo++;
-                kj--;
-                }
+        if((kj+1 <stlpce &&hadanka[ki][kj+1]==slovo[k+1])||hadanka[ki][kj+1]==(slovo[k+1]+=32)) {//vpravo
+            k++;
+            vpravo++;
+            kj++;
+        }
+        else if((ki+1 <riadky && hadanka[ki+1][kj] == slovo[k+1])||(ki+1 <riadky && hadanka[ki+1][kj] == (slovo[k+1]+=32))) {//dole
+            k++;
+            dole++;
+            ki++;
+        }
+        else if ((kj-1 >=0&&hadanka[ki][kj-1] == p[k+1])||(kj - 1 >= 0 && hadanka[ki][kj-1] == (p[k+1]+=32))) {
+            k++;
+            vlavo++;
+            kj--;
+        }
+        else if ((ki-1 >= 0 && hadanka[ki - 1][kj] == p[k+1]) ||(ki-1 >= 0 && hadanka[ki-1][kj]) == (p[k+1]+=32)) {
+            ki--;
+            k++;
+            hore++;
+        }
 
         if(vpravo==len-1){
             putchar('\n');
@@ -165,13 +157,14 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
             return 1;
             break;
         }
-        if(hore==len-1){
+       if(hore==len-1){
             putchar('\n');
             skrt_hore(hadanka,ki_p,kj_p,riadky,stlpce,len,slovo);
             hore=1;
             return 1;
             break;
         }
+
         if(vlavo==len-1){
             putchar('\n');
             skrt_vlavo(hadanka,ki_p,kj_p,riadky,stlpce,len);
@@ -203,10 +196,10 @@ void hladaj_slovo_podlaind(char **hadanka,int riadky,int stlpce,char slovo[],int
         if (slovoind == index[i][0]) {
             for (int j = 0; j < pocet[i]+1; j++) {
                 if(k==0){
-                ki=index[i][number++];
-                kj=index[i][number];
-                number++;
-                k=hladanie_slova(hadanka,ki,kj,riadky,stlpce,slovo,len);
+                    ki=index[i][number++];
+                    kj=index[i][number];
+                    number++;
+                    k=hladanie_slova(hadanka,ki,kj,riadky,stlpce,slovo,len);
                 }
                 else break;
             }
