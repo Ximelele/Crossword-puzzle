@@ -10,15 +10,13 @@
 
 
 int main() {
-    char **hadanka;
+    char **hadanka=NULL;
     int stlpec=0,riadok=0,*index[26],x=65,pocet[26];
     nacitaj_velkost(&riadok,&stlpec);
-
     hadanka=(char**) malloc(riadok* sizeof(char*));
     for (int i = 0; i < riadok; ++i) {
         hadanka[i]=(char*) calloc(stlpec,sizeof(char*));
     }
-
     nacitaj_pole(hadanka,riadok,stlpec);
     for (int k = 0; k < 26; ++k) {
         index[k]=(int*) malloc(2*N*sizeof(int*));
@@ -26,21 +24,11 @@ int main() {
         index[k][0]=x++;
         pocet[k]=-1;
     }
-
     vypis_pola(hadanka,riadok,stlpec);
     pocet_znak(hadanka,index,riadok,stlpec,pocet);
     nacitanie_slov(hadanka,index,riadok,stlpec,pocet);
 
-
-
-
-
-
-
-
-
-
-    uvolni(hadanka,riadok);
+    uvolnic(hadanka,riadok);
 
 
     return 0;
