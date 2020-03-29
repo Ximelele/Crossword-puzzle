@@ -50,6 +50,14 @@ void vypis_pola(char **hadanka,int riadok, int stlpec){
         }
     }
 }
+void vypis_pola_koniec(char **hadanka,int riadok, int stlpec){
+    for (int j = 0; j < riadok; ++j) {
+        for (int i = 0; i < stlpec +1; ++i) {
+            if(isupper(hadanka[j][i]))
+                printf("%c",hadanka[j][i]);
+        }
+    }
+}
 void pocet_znak(char **hadanka,int *index[],int riadky,int stlpce,int pocet[]) {
     int allocovane[26]={6};
     for (int riadok = 0; riadok < riadky; riadok++) {
@@ -119,9 +127,21 @@ void skrt_vlavo(char **hadanka,int ki,int kj,int riadky,int stlpce,int len) {
     }
     vypis_pola(hadanka,riadky,stlpce);
 }
-
+void skrt_vpdl(char **hadanka,int ki,int kj,int riadky,int stlpce,int len,char slovo[]) {
+    int k=0;
+    while (k!=len) {
+        if(!islower(hadanka[ki][kj])){
+            hadanka[ki][kj]+=32;
+        }
+        ki++;
+        kj++;
+        k++;
+    }
+    vypis_pola(hadanka,riadky,stlpce);
+}
 int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo[],int len){
     int vpravo=1,dole=1,hore=1,vlavo=1,ki_p=ki,kj_p=kj,len_cyklu=0,k=0,kek=len;
+    int sv=1;
     char *p;
     p=(char*)malloc(len* sizeof(char*));
     strcpy(p,slovo);
@@ -139,6 +159,12 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
             dole++;
             ki++;
         }
+        else if((ki+1 <riadky &&kj+1 <stlpce&& hadanka[ki+1][kj+1] == slovo[k+1])||(ki+1 <riadky &&kj+1 <stlpce&& hadanka[ki+1][kj+1] ==( slovo[k+1]+=32))) {
+            k++;
+            sv++;
+            ki++;
+            kj++;
+        }
         else if ((kj-1 >=0&&hadanka[ki][kj-1] == p[k+1])||(kj - 1 >= 0 && hadanka[ki][kj-1] == (p[k+1]+=32))) {
             k++;
             vlavo++;
@@ -154,6 +180,13 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
             putchar('\n');
             skrt_vpravo(hadanka,ki_p,kj_p,riadky,stlpce,len,slovo);
             vpravo=1;
+            return 1;
+            break;
+        }
+        if(sv==len-1){
+            putchar('\n');
+            skrt_vpdl(hadanka,ki_p,kj_p,riadky,stlpce,len,slovo);
+            sv=1;
             return 1;
             break;
         }
@@ -186,7 +219,6 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
     }
 
 }
-
 void hladaj_slovo_podlaind(char **hadanka,int riadky,int stlpce,char slovo[],int pocet[],int *index[]){
     int k=0,ki=0,kj=0,number=1;
     int slovoind =slovo[0];
@@ -205,7 +237,6 @@ void hladaj_slovo_podlaind(char **hadanka,int riadky,int stlpce,char slovo[],int
             }
         }
     }
-    putchar('\n');
 }
 void nacitanie_slov(char **hadanka,int *index[], int riadky,int stlpce,int pocet[]) {
     FILE *fr;
@@ -219,10 +250,8 @@ void nacitanie_slov(char **hadanka,int *index[], int riadky,int stlpce,int pocet
     while( (fscanf(fr, "%s", slovo))!=EOF) {//dolezite je poradie ty tupy chuj
         hladaj_slovo_podlaind(hadanka, riadky, stlpce, slovo,pocet,index);
     }
-
+    vypis_pola_koniec(hadanka,riadky,stlpce);
 }
-
-
 void uvolni(char **slovnik,int riadok) {
     int i;
     for (i = 0; i < riadok; i++)
