@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #define SUBOR "cisla1.txt"
-#define N 2
+#define N 3
 
 int otvaranie(FILE *fr){
     if((fr=fopen(SUBOR,"r"))==NULL) {
@@ -71,12 +71,14 @@ void vypis_pola_koniec(char **hadanka,int riadok, int stlpec){
     else printf("Tajnicka je prazdna");
 }
 void pocet_znak(char **hadanka,int *index[],int riadky,int stlpce,int pocet[]) {
-    int allocovane[26]={2};
+    int allocovane[26];
+    for (int i = 0; i < 26; ++i)
+        allocovane[i]=N;
     for (int riadok = 0; riadok < riadky; riadok++) {
         for (int stlpec = 0; stlpec < stlpce; stlpec++) {
             for (int abeceda = 0; abeceda < 26; abeceda++) { //ak bude pocet[abeceda]==NULL the index[k][pocet[k]=-1
-                if(allocovane[abeceda]<pocet[abeceda]+1){
-                    index[abeceda]=(int*)realloc(index[abeceda],(pocet[abeceda]+N)*sizeof(int*));//strasny sef keby to funguje 
+                if(allocovane[abeceda]==pocet[abeceda]){
+                    index[abeceda]=(int*)realloc(index[abeceda],sizeof(int)*(pocet[abeceda]+N));//strasny sef keby to funguje
                     allocovane[abeceda]+=N;
                     pocet[abeceda]+=2;
                     index[abeceda][pocet[abeceda]-1]=riadok;
@@ -152,39 +154,41 @@ void skrt_vpdl(char **hadanka,int ki,int kj,int riadky,int stlpce,int len,char s
     vypis_pola(hadanka,riadky,stlpce);
 }
 int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo[],int len){
-    int vpravo=1,dole=1,hore=1,vlavo=1,ki_p=ki,kj_p=kj,len_cyklu=0,k=0,kek=len;
+    int vpravo=1,dole=1,hore=1,vlavo=1,ki_p=ki,kj_p=kj,len_cyklu=0,k=1;
     int jv=1,jz=1;
-    char *p;
+    char *p,*slv;
+    slv=(char*)malloc(len* sizeof(char*));
+    strcpy(slv,slovo);
     p=(char*)malloc(len* sizeof(char*));
     strcpy(p,slovo);
     strrev(p);
 
     while (ki != -1 && ki != riadky+1 && kj != -1 && kj != stlpce+1) {
 
-        if((kj+1 <stlpce &&hadanka[ki][kj+1]==slovo[k+1])||hadanka[ki][kj+1]==(slovo[k+1]+=32)) {//vpravo
+        if((kj+1 <stlpce &&hadanka[ki][kj+1]==slv[k])||hadanka[ki][kj+1]==(slv[k]+=32)) {//vpravo
             k++;
             vpravo++;
             kj++;
         }
-        else if((ki+1 <riadky && hadanka[ki+1][kj] == slovo[k+1])||(ki+1 <riadky && hadanka[ki+1][kj] == (slovo[k+1]+=32))) {//dole
+        else if((ki+1 <riadky && hadanka[ki+1][kj] == slv[k])||(ki+1 <riadky && hadanka[ki+1][kj] == (slv[k]+=32))) {//dole
             k++;
             dole++;
             ki++;
         }
-        else if((ki+1 <riadky &&kj+1 <stlpce && hadanka[ki+1][kj+1] == slovo[k+1])||(ki+1 <riadky &&kj+1 <stlpce&& hadanka[ki+1][kj+1] ==( slovo[k+1]+=32))) {
+        else if((ki+1 <riadky &&kj+1 <stlpce && hadanka[ki+1][kj+1] == slv[k])||(ki+1 <riadky &&kj+1 <stlpce&& hadanka[ki+1][kj+1] ==( slv[k]+=32))) {
             k++;
             jv++;
             ki++;
             kj++;
         }
 
-        else if ((kj-1 >=0&&hadanka[ki][kj-1] == p[k+1])||(kj - 1 >= 0 && hadanka[ki][kj-1] == (p[k+1]+=32))) {
+        else if ((kj-1 >=0&&hadanka[ki][kj-1] == p[k])||(kj - 1 >= 0 && hadanka[ki][kj-1] == (p[k]+=32))) {
             k++;
             vlavo++;
             kj--;
         }
 
-        else if ((ki-1 >= 0 && hadanka[ki - 1][kj] == p[k+1]) ||(ki-1 >= 0 && hadanka[ki-1][kj]) == (p[k+1]+=32)) {
+        else if ((ki-1 >= 0 && hadanka[ki - 1][kj] == p[k]) ||(ki-1 >= 0 && hadanka[ki-1][kj]) == (p[k]+=32)) {
             ki--;
             k++;
             hore++;
