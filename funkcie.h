@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #define SUBOR "cisla1.txt"
-#define N 3
+#define N 2
 
 int otvaranie(FILE *fr){
     if((fr=fopen(SUBOR,"r"))==NULL) {
@@ -71,13 +71,13 @@ void vypis_pola_koniec(char **hadanka,int riadok, int stlpec){
     else printf("Tajnicka je prazdna");
 }
 void pocet_znak(char **hadanka,int *index[],int riadky,int stlpce,int pocet[]) {
-    int allocovane[26]={6};
+    int allocovane[26]={2};
     for (int riadok = 0; riadok < riadky; riadok++) {
         for (int stlpec = 0; stlpec < stlpce; stlpec++) {
             for (int abeceda = 0; abeceda < 26; abeceda++) { //ak bude pocet[abeceda]==NULL the index[k][pocet[k]=-1
-                if(allocovane[abeceda]==pocet[abeceda]){
-                    index[abeceda]=(int*)realloc(index[pocet[abeceda]],2*N* sizeof(int*));//strasny sef
-                    allocovane[abeceda]+=2*N* sizeof(int*);
+                if(allocovane[abeceda]<pocet[abeceda]+1){
+                    index[abeceda]=(int*)realloc(index[abeceda],(pocet[abeceda]+N)*sizeof(int*));//strasny sef keby to funguje 
+                    allocovane[abeceda]+=N;
                     pocet[abeceda]+=2;
                     index[abeceda][pocet[abeceda]-1]=riadok;
                     index[abeceda][pocet[abeceda]]=stlpec;
@@ -204,7 +204,7 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
             return 1;
             break;
         }
-       if(hore==len-1){
+        if(hore==len-1){
             putchar('\n');
             skrt_hore(hadanka,ki_p,kj_p,riadky,stlpce,len,slovo);
             hore=1;
