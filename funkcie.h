@@ -163,7 +163,7 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
     strcpy(p,slovo);
     strrev(p);
 
-    while (ki != -1 && ki != riadky+1 && kj != -1 && kj != stlpce+1) {
+    while (ki != -1 && ki != riadky+1 && kj != -1 && kj != stlpce+1) {//uz ked som to pisal som nevedel co robim
 
         if((kj+1 <stlpce &&hadanka[ki][kj+1]==slv[k])||hadanka[ki][kj+1]==(slv[k]+=32)) {//vpravo
             k++;
@@ -175,20 +175,19 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
             dole++;
             ki++;
         }
-        else if((ki+1 <riadky &&kj+1 <stlpce && hadanka[ki+1][kj+1] == slv[k])||(ki+1 <riadky &&kj+1 <stlpce&& hadanka[ki+1][kj+1] ==( slv[k]+=32))) {
+        else if(((ki+1 <riadky) &&kj+1 <stlpce && hadanka[ki+1][kj+1] == slv[k])||(ki+1 <riadky &&kj+1 <stlpce&& hadanka[ki+1][kj+1] ==( slv[k]+=32))) {//vpdl
             k++;
             jv++;
             ki++;
             kj++;
         }
-
-        else if ((kj-1 >=0&&hadanka[ki][kj-1] == p[k])||(kj - 1 >= 0 && hadanka[ki][kj-1] == (p[k]+=32))) {
+        else if ((kj-1 >=0&&hadanka[ki][kj-1] == p[k])||(kj - 1 >= 0 && hadanka[ki][kj-1] == (p[k]+=32))) {//vlavo
             k++;
             vlavo++;
             kj--;
         }
 
-        else if ((ki-1 >= 0 && hadanka[ki - 1][kj] == p[k]) ||(ki-1 >= 0 && hadanka[ki-1][kj]) == (p[k]+=32)) {
+        else if ((ki-1 >= 0 && hadanka[ki - 1][kj] == p[k]) ||(ki-1 >= 0 && hadanka[ki-1][kj]) == (p[k]+=32)) {//hore
             ki--;
             k++;
             hore++;
@@ -198,6 +197,7 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
             putchar('\n');
             skrt_vpravo(hadanka,ki_p,kj_p,riadky,stlpce,len,slovo);
             vpravo=1;
+            k=1;
             return 1;
             break;
         }
@@ -205,6 +205,15 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
             putchar('\n');
             skrt_vpdl(hadanka,ki_p,kj_p,riadky,stlpce,len,slovo);
             jv=1;
+            k=1;
+            return 1;
+            break;
+        }
+        if(jz==len-1){
+            putchar('\n');
+            //skrt_vldl(hadanka,ki_p,kj_p,riadky,stlpce,len,slovo);
+            jz=1;
+            k=1;
             return 1;
             break;
         }
@@ -212,6 +221,7 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
             putchar('\n');
             skrt_hore(hadanka,ki_p,kj_p,riadky,stlpce,len,slovo);
             hore=1;
+            k=1;
             return 1;
             break;
         }
@@ -220,6 +230,7 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
             putchar('\n');
             skrt_vlavo(hadanka,ki_p,kj_p,riadky,stlpce,len);
             vlavo=1;
+            k=1;
             return 1;
             break;
         }
@@ -227,6 +238,7 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
             putchar('\n');
             skrt_dole(hadanka,ki_p,kj_p,riadky,stlpce,len,slovo);
             dole=1;
+            k=1;
             return 1;
             break;
         }
