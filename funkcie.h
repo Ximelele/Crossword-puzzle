@@ -166,6 +166,42 @@ void skrt_vpdl(char **hadanka,int ki,int kj,int riadky,int stlpce,int len) {
     }
     vypis_pola(hadanka,riadky,stlpce);
 }
+void skrt_vldl(char **hadanka,int ki,int kj,int riadky,int stlpce,int len) {
+    int k=0;
+    while (k!=len) {
+        if(!islower(hadanka[ki][kj])){
+            hadanka[ki][kj]+=32;
+        }
+        ki++;
+        kj--;
+        k++;
+    }
+    vypis_pola(hadanka,riadky,stlpce);
+}
+void skrt_hrvl(char **hadanka,int ki,int kj,int riadky,int stlpce,int len) {
+    int k=0;
+    while (k!=len) {
+        if(!islower(hadanka[ki][kj])){
+            hadanka[ki][kj]+=32;
+        }
+        ki--;
+        kj--;
+        k++;
+    }
+    vypis_pola(hadanka,riadky,stlpce);
+}
+void skrt_hrvp(char **hadanka,int ki,int kj,int riadky,int stlpce,int len) {
+    int k=0;
+    while (k!=len) {
+        if(!islower(hadanka[ki][kj])){
+            hadanka[ki][kj]+=32;
+        }
+        ki--;
+        kj++;
+        k++;
+    }
+    vypis_pola(hadanka,riadky,stlpce);
+}
 int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo[],int len){
     int vpravo=0,dole=0,hore=0,vlavo=0,ki_p=ki,kj_p=kj,len_cyklu=0,k=1;
     int jv=0,jz=0,sz=0,sv=0;
@@ -202,6 +238,24 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
             return 1;
         }
         while(k!=len) {
+            int i=kj;
+            if((i-1>=0&&hadanka[ki][i-1]==slovo[k]&&(dole==0&&vlavo==0&&vpravo==0))||(i-1>=0&&islower(hadanka[ki][i-1])==islower(slovo[k])&&(dole==0&&vlavo==0&&vpravo==0))){
+                hore=1;
+                k++;
+                i--;
+            }
+            else{
+                hore=0;
+                k=1;
+                break;
+            }
+
+        }
+        if(hore==1){
+            skrt_hore(hadanka,ki_p,kj_p,riadky,stlpce,len);
+            return 1;
+        }
+        while(k!=len) {
             int i=kj-1;
             if((i-1>=0&&hadanka[ki][i-1]==slovo[k]&&(dole==0&&hore==0&&vpravo==0))||(i-1>=0&&islower(hadanka[ki][i-1])==islower(slovo[k])&&(dole==0&&hore==0&&vpravo==0))){
                 vlavo=1;
@@ -219,8 +273,84 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
             skrt_vlavo(hadanka,ki_p,kj_p,riadky,stlpce,len);
             return 1;
         }
+        while(k!=len) {
+            int i=ki,j=kj;
+            if((i+1<stlpce&&j+1<stlpce&&hadanka[i+1][j+1]==slovo[k]&&(dole==0&&hore==0&&vpravo==0))||(i+1<stlpce&&j+1<stlpce&&islower(hadanka[i+1][j+1])==islower(slovo[k])&&(dole==0&&hore==0&&vpravo==0))){
+                jv=1;
+                k++;
+                i++;
+                j++;
+            }
+            else{
+                jv=0;
+                k=1;
+                break;
+            }
 
-        
+        }
+        if(jv==1){
+            skrt_vpdl(hadanka,ki_p,kj_p,riadky,stlpce,len);
+            return 1;
+        }
+        while(k!=len) {
+            int i=ki,j=kj;
+            if((i+1<stlpce&&j+1<stlpce&&hadanka[i+1][j-1]==slovo[k]&&(dole==0&&hore==0&&vpravo==0))||(i+1<stlpce&&j+1<stlpce&&islower(hadanka[i+1][j-1])==islower(slovo[k])&&(dole==0&&hore==0&&vpravo==0))){
+                jz=1;
+                k++;
+                i++;
+                j--;
+            }
+            else{
+                jz=0;
+                k=1;
+                break;
+            }
+
+        }
+        if(jz==1){
+            skrt_vldl(hadanka,ki_p,kj_p,riadky,stlpce,len);
+            return 1;
+        }
+        while(k!=len) {
+            int i=ki-1,j=kj-1;
+            if((i-1 >=0&&j-1 >=0&&hadanka[i-1][j-1]==slovo[k]&&(dole==0&&hore==0&&vpravo==0))||(i-1 >=0&&j-1 >=0&&islower(hadanka[i-1][j-1])==islower(slovo[k])&&(dole==0&&hore==0&&vpravo==0))){
+                sz=1;
+                k++;
+                i--;
+                j--;
+            }
+            else{
+                sz=0;
+                k=1;
+                break;
+            }
+
+        }
+        if(sz==1){
+            skrt_hrvl(hadanka,ki_p,kj_p,riadky,stlpce,len);
+            return 1;
+        }
+        while(k!=len) {
+            int i=ki-1,j=kj;
+            if((i-1 >=0&&j+1<stlpce&&hadanka[i-1][j+1]==slovo[k]&&(dole==0&&hore==0&&vpravo==0))||(i-1 >=0&&j+1<stlpce&&islower(hadanka[i-1][j+1])==islower(slovo[k])&&(dole==0&&hore==0&&vpravo==0))){
+                sv=1;
+                k++;
+                i--;
+                j++;
+            }
+            else{
+                sz=0;
+                k=1;
+                break;
+            }
+
+        }
+        if(sv==1){
+            skrt_hrvp(hadanka,ki_p,kj_p,riadky,stlpce,len);
+            return 1;
+        }
+
+
         if((len_cyklu++)==len){
             return 0;
         }
