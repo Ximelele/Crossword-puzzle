@@ -204,7 +204,7 @@ void skrt_hrvp(char **hadanka,int ki,int kj,int riadky,int stlpce,int len) {
 }
 int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo[],int len) {
     int vpravo = 0, dole = 0, hore = 0, vlavo = 0, ki_p = ki, kj_p = kj, len_cyklu = 0, k = 0;
-    int jv = 1, jz = 1;
+    int jv = 0, jz = 0;
     while (1) {
 
        for(int i=kj;i-kj<len;i++){
@@ -254,7 +254,7 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
             return 1;
         }else k=0;
         for(int i=ki;i+ki>len;i--){
-            if((i<riadky&&i>=0&&k<len)&&(hadanka[i][kj]==slovo[k]||hadanka[i][kj]==tolower(slovo[k]))) {//dole
+            if((i<riadky&&i>=0&&k<len)&&(hadanka[i][kj]==slovo[k]||hadanka[i][kj]==tolower(slovo[k]))) {//hore
                 k++;
                 hore=1;
             }
@@ -268,6 +268,38 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
             skrt_hore(hadanka,ki_p,kj_p,riadky,stlpce,len);
             return 1;
         } else k=0;
+        for(int i=kj,j=ki;i-kj<len;i++,j++){
+            if((i<stlpce&&i>=0&&k<len)&&(hadanka[j][i]==slovo[k]||hadanka[j][i]==tolower(slovo[k]))) {//vpdl
+                k++;
+                jv=1;
+            }
+            else {
+                jv=0;
+                break;
+            }
+        }
+        if(jv==1){
+            putchar('\n');
+            skrt_vpdl(hadanka,ki_p,kj_p,riadky,stlpce,len);
+            return 1;
+        } else k=0;
+
+        for(int i=ki,j=kj;i-ki<len;i++,j--){
+            if((i<stlpce&&i>=0&&k<len)&&(hadanka[i][j]==slovo[k]||hadanka[i][j]==tolower(slovo[k]))) {//vldl
+                k++;
+                jz=1;
+            }
+            else {
+                jz=0;
+                break;
+            }
+        }
+        if(jz==1){
+            putchar('\n');
+            skrt_vldl(hadanka,ki_p,kj_p,riadky,stlpce,len);
+            return 1;
+        } else k=0;
+
         if (++len_cyklu)
             return 0;
     }
