@@ -253,6 +253,21 @@ int hladanie_slova(char **hadanka,int ki,int kj,int riadky,int stlpce,char slovo
             skrt_vlavo(hadanka,ki_p,kj_p,riadky,stlpce,len);
             return 1;
         }else k=0;
+        for(int i=ki;i+ki>len;i--){
+            if((i<riadky&&i>=0&&k<len)&&(hadanka[i][kj]==slovo[k]||hadanka[i][kj]==tolower(slovo[k]))) {//dole
+                k++;
+                hore=1;
+            }
+            else {
+                hore=0;
+                break;
+            }
+        }
+        if(hore==1){
+            putchar('\n');
+            skrt_hore(hadanka,ki_p,kj_p,riadky,stlpce,len);
+            return 1;
+        } else k=0;
         if (++len_cyklu)
             return 0;
     }
